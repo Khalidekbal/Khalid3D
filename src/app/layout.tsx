@@ -77,11 +77,11 @@ export default function RootLayout({
                   FDM Materials
                 </h4>
                 <ul className="space-y-1.5 text-slate-600">
-                  <li><Link href="/quote?mat=PLA" className="hover:text-blue-600">PLA Tough Industrial (Prototyping)</Link></li>
-                  <li><Link href="/quote?mat=PETG" className="hover:text-blue-600">PETG Engineering Grade (Durable)</Link></li>
-                  <li><Link href="/quote?mat=TPU" className="hover:text-blue-600">TPU 95A Flexible (Gaskets & Dampers)</Link></li>
-                  <li><Link href="/quote" className="hover:text-blue-600">Multi-Part Instant Quotation</Link></li>
-                  <li><Link href="/catalog" className="hover:text-blue-600">Pre-Engineered Parts Catalog</Link></li>
+                  <li><Link href="/quote?mat=PLA" className="hover:text-red-600">PLA Tough Industrial (Prototyping)</Link></li>
+                  <li><Link href="/quote?mat=PETG" className="hover:text-red-600">PETG Engineering Grade (Durable)</Link></li>
+                  <li><Link href="/quote?mat=TPU" className="hover:text-red-600">TPU 95A Flexible (Gaskets & Dampers)</Link></li>
+                  <li><Link href="/quote" className="hover:text-red-600">Multi-Part Instant Quotation</Link></li>
+                  <li><Link href="/catalog" className="hover:text-red-600">Pre-Engineered Parts Catalog</Link></li>
                 </ul>
               </div>
 
@@ -92,15 +92,15 @@ export default function RootLayout({
                 </h4>
                 <div className="space-y-2 text-slate-600">
                   <div className="flex items-center gap-2">
-                    <MapPin className="w-3.5 h-3.5 text-blue-600 shrink-0" />
+                    <MapPin className="w-3.5 h-3.5 text-red-600 shrink-0" />
                     <span>Dokki, Giza / Cairo, Egypt</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <Phone className="w-3.5 h-3.5 text-blue-600 shrink-0" />
+                    <Phone className="w-3.5 h-3.5 text-red-600 shrink-0" />
                     <span>WhatsApp: +20 100 123 4567</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <Mail className="w-3.5 h-3.5 text-blue-600 shrink-0" />
+                    <Mail className="w-3.5 h-3.5 text-red-600 shrink-0" />
                     <span>khalid@khalid3d.com</span>
                   </div>
                 </div>

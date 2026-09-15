@@ -43,7 +43,7 @@ interface Order {
 
 const STATUS_CONFIG: Record<string, { label: string; color: string; step: number }> = {
   PENDING_REVIEW: { label: "CAM Engineering Review", color: "text-amber-400 bg-amber-950/60 border-amber-800/60", step: 1 },
-  QUOTED: { label: "Quoted / Awaiting Payment", color: "text-blue-400 bg-blue-950/60 border-blue-800/60", step: 1 },
+  QUOTED: { label: "Quoted / Awaiting Payment", color: "text-red-400 bg-red-950/60 border-red-800/60", step: 1 },
   PAYMENT_RECEIVED: { label: "Payment Confirmed", color: "text-cyan-400 bg-cyan-950/60 border-cyan-800/60", step: 2 },
   IN_PRODUCTION: { label: "Printing on Bed", color: "text-indigo-400 bg-indigo-950/60 border-indigo-800/60", step: 3 },
   POST_PROCESSING: { label: "Depowdering / Curing", color: "text-purple-400 bg-purple-950/60 border-purple-800/60", step: 4 },

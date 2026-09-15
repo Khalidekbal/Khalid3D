@@ -65,9 +65,9 @@ export default function CatalogPage() {
         <div>
           <div className="flex items-center gap-2">
             <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-slate-900 font-mono">
-              PRE-MADE <span className="text-blue-600">HARDWARE & KITS</span>
+              PRE-MADE <span className="text-red-600">HARDWARE & KITS</span>
             </h1>
-            <span className="text-[11px] font-mono bg-blue-50 text-blue-700 border border-blue-200 px-2 py-0.5 rounded uppercase font-semibold">
+            <span className="text-[11px] font-mono bg-red-50 text-red-700 border border-red-200 px-2 py-0.5 rounded uppercase font-semibold">
               FDM In-Stock
             </span>
           </div>
@@ -85,7 +85,7 @@ export default function CatalogPage() {
               onClick={() => setSelectedMaterial(mat)}
               className={`px-3 py-1.5 text-xs font-mono font-bold rounded-lg transition-colors ${
                 selectedMaterial === mat
-                  ? "bg-blue-600 text-white shadow-sm"
+                  ? "bg-red-600 text-white shadow-sm"
                   : "text-slate-600 hover:text-slate-900 hover:bg-slate-200"
               }`}
             >
@@ -98,8 +98,8 @@ export default function CatalogPage() {
       {/* Products Grid */}
       {loading ? (
         <div className="py-20 flex flex-col items-center justify-center gap-3">
-          <div className="w-10 h-10 border-3 border-blue-600 border-t-transparent rounded-full animate-spin" />
-          <p className="text-xs font-mono text-blue-600">Loading Pre-Made Hardware...</p>
+          <div className="w-10 h-10 border-3 border-red-600 border-t-transparent rounded-full animate-spin" />
+          <p className="text-xs font-mono text-red-600">Loading Pre-Made Hardware...</p>
         </div>
       ) : products.length === 0 ? (
         <div className="py-20 text-center text-slate-500">
@@ -120,7 +120,7 @@ export default function CatalogPage() {
             return (
               <div
                 key={p.id}
-                className="group rounded-2xl border border-slate-200 bg-white hover:border-blue-300 hover:shadow-lg transition-all hover:-translate-y-1 overflow-hidden flex flex-col justify-between"
+                className="group rounded-2xl border border-slate-200 bg-white hover:border-red-300 hover:shadow-lg transition-all hover:-translate-y-1 overflow-hidden flex flex-col justify-between"
               >
                 <div>
                   {/* Visual Technical Diagram */}
@@ -131,7 +131,7 @@ export default function CatalogPage() {
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                     />
                     <div className="absolute top-3 left-3 flex gap-1.5">
-                      <span className="text-[10px] font-mono font-bold uppercase px-2 py-0.5 rounded bg-white/90 text-blue-700 border border-blue-200 shadow-sm">
+                      <span className="text-[10px] font-mono font-bold uppercase px-2 py-0.5 rounded bg-white/90 text-red-700 border border-red-200 shadow-sm">
                         {p.technology}
                       </span>
                       <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-white/90 text-slate-700 border border-slate-200 shadow-sm">
@@ -146,7 +146,7 @@ export default function CatalogPage() {
 
                   {/* Body Content */}
                   <div className="p-5 space-y-3">
-                    <h3 className="font-bold text-base text-slate-900 group-hover:text-blue-600 transition-colors">
+                    <h3 className="font-bold text-base text-slate-900 group-hover:text-red-600 transition-colors">
                       {p.title}
                     </h3>
                     <p className="text-xs text-slate-600 leading-relaxed line-clamp-2">
@@ -164,14 +164,14 @@ export default function CatalogPage() {
                 <div className="p-5 pt-0 flex items-center justify-between gap-4">
                   <div>
                     <span className="text-[10px] font-mono text-slate-500 block">Unit Price</span>
-                    <span className="text-xl font-bold font-mono text-blue-600">
+                    <span className="text-xl font-bold font-mono text-red-600">
                       EGP {p.price.toFixed(0)}
                     </span>
                   </div>
 
                   <button
                     onClick={() => handleBuyNow(p)}
-                    className="py-2.5 px-4 rounded-xl text-xs font-bold text-white bg-blue-600 hover:bg-blue-700 transition-colors flex items-center gap-1.5 shadow-sm shadow-blue-500/20"
+                    className="py-2.5 px-4 rounded-xl text-xs font-bold text-white bg-red-600 hover:bg-red-700 transition-colors flex items-center gap-1.5 shadow-sm shadow-red-500/20"
                   >
                     <ShoppingBag className="w-3.5 h-3.5" />
                     <span>Order Now</span>

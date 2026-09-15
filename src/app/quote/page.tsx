@@ -413,7 +413,7 @@ export default function QuotePage() {
             <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-slate-900 font-mono">
               {t.quote.title}
             </h1>
-            <span className="text-[11px] font-mono bg-blue-50 text-blue-700 border border-blue-200 px-2 py-0.5 rounded font-bold uppercase">
+            <span className="text-[11px] font-mono bg-red-50 text-red-700 border border-red-200 px-2 py-0.5 rounded font-bold uppercase">
               EGP Currency
             </span>
           </div>
@@ -427,19 +427,19 @@ export default function QuotePage() {
           <span className="text-xs font-mono text-slate-500 font-medium">Quick Test CAD:</span>
           <button
             onClick={() => loadSamplePart("/models/drone_motor_bracket.stl", "Drone_Motor_Bracket.stl", "PETG")}
-            className="px-3 py-1.5 text-xs font-semibold rounded-xl bg-white border border-slate-200 hover:border-blue-500 hover:text-blue-600 text-slate-700 transition-colors shadow-2xs"
+            className="px-3 py-1.5 text-xs font-semibold rounded-xl bg-white border border-slate-200 hover:border-red-500 hover:text-red-600 text-slate-700 transition-colors shadow-2xs"
           >
             + Drone Bracket (PETG)
           </button>
           <button
             onClick={() => loadSamplePart("/models/calibration_cube_20mm.stl", "Calibration_Cube_20mm.stl", "PLA")}
-            className="px-3 py-1.5 text-xs font-semibold rounded-xl bg-white border border-slate-200 hover:border-blue-500 hover:text-blue-600 text-slate-700 transition-colors shadow-2xs"
+            className="px-3 py-1.5 text-xs font-semibold rounded-xl bg-white border border-slate-200 hover:border-red-500 hover:text-red-600 text-slate-700 transition-colors shadow-2xs"
           >
             + 20mm Cube (PLA)
           </button>
           <button
             onClick={() => loadSamplePart("/models/sensor_enclosure_lid.stl", "Sensor_Lid.stl", "TPU")}
-            className="px-3 py-1.5 text-xs font-semibold rounded-xl bg-white border border-slate-200 hover:border-blue-500 hover:text-blue-600 text-slate-700 transition-colors shadow-2xs"
+            className="px-3 py-1.5 text-xs font-semibold rounded-xl bg-white border border-slate-200 hover:border-red-500 hover:text-red-600 text-slate-700 transition-colors shadow-2xs"
           >
             + Flexible Lid (TPU)
           </button>
@@ -457,8 +457,8 @@ export default function QuotePage() {
         onClick={() => fileInputRef.current?.click()}
         className={`relative border-2 border-dashed rounded-2xl p-8 sm:p-10 transition-all cursor-pointer text-center flex flex-col items-center justify-center gap-3 ${
           isDragOver
-            ? "border-blue-500 bg-blue-50/50 scale-[1.005]"
-            : "border-slate-300 hover:border-blue-400 bg-white hover:bg-slate-50/70 shadow-xs"
+            ? "border-red-500 bg-red-50/50 scale-[1.005]"
+            : "border-slate-300 hover:border-red-400 bg-white hover:bg-slate-50/70 shadow-xs"
         }`}
       >
         <input
@@ -470,13 +470,13 @@ export default function QuotePage() {
           className="hidden"
         />
 
-        <div className="w-14 h-14 rounded-2xl bg-blue-50 border border-blue-200 flex items-center justify-center text-blue-600 shadow-xs">
+        <div className="w-14 h-14 rounded-2xl bg-red-50 border border-red-200 flex items-center justify-center text-red-600 shadow-xs">
           <UploadCloud className="w-7 h-7" />
         </div>
 
         <div>
           <p className="text-base font-bold text-slate-900">
-            Drag & Drop your 3D CAD files here, or <span className="text-blue-600 underline">Browse Files</span>
+            Drag & Drop your 3D CAD files here, or <span className="text-red-600 underline">Browse Files</span>
           </p>
           <p className="text-xs text-slate-500 mt-1 font-mono">
             Supports .STL (Binary & ASCII) and .3MF • Exclusively FDM (PLA, PETG, TPU)
@@ -503,12 +503,12 @@ export default function QuotePage() {
           <div className="lg:col-span-7 space-y-6">
             <div className="flex items-center justify-between">
               <h2 className="text-base font-bold text-slate-900 flex items-center gap-2">
-                <Box className="w-4 h-4 text-blue-600" />
+                <Box className="w-4 h-4 text-red-600" />
                 Configured FDM Parts ({parts.length})
               </h2>
               <button
                 onClick={() => fileInputRef.current?.click()}
-                className="text-xs font-semibold text-blue-600 hover:text-blue-700 flex items-center gap-1"
+                className="text-xs font-semibold text-red-600 hover:text-red-700 flex items-center gap-1"
               >
                 <FileUp className="w-3.5 h-3.5" />
                 Add More CAD Files
@@ -527,7 +527,7 @@ export default function QuotePage() {
                     onClick={() => setSelectedPartId(part.id)}
                     className={`p-5 rounded-2xl border transition-all cursor-pointer bg-white ${
                       isSelected
-                        ? "border-blue-600 ring-2 ring-blue-500/20 shadow-md"
+                        ? "border-red-600 ring-2 ring-red-500/20 shadow-md"
                         : "border-slate-200 hover:border-slate-300 shadow-xs"
                     }`}
                   >
@@ -543,7 +543,7 @@ export default function QuotePage() {
                             <span className="font-bold text-sm text-slate-900 truncate max-w-[200px] sm:max-w-[260px]">
                               {part.fileName}
                             </span>
-                            <span className="text-[10px] font-mono uppercase bg-blue-50 text-blue-700 px-2 py-0.5 rounded font-bold border border-blue-200">
+                            <span className="text-[10px] font-mono uppercase bg-red-50 text-red-700 px-2 py-0.5 rounded font-bold border border-red-200">
                               FDM
                             </span>
                           </div>
@@ -558,7 +558,7 @@ export default function QuotePage() {
                       {/* Price & Delete */}
                       <div className="flex items-center gap-3">
                         <div className="text-right">
-                          <div className="text-base font-mono font-bold text-blue-600">
+                          <div className="text-base font-mono font-bold text-red-600">
                             {part.quote.totalPrice.toFixed(2)} EGP
                           </div>
                           <div className="text-[11px] text-slate-400 font-mono">
@@ -602,7 +602,7 @@ export default function QuotePage() {
                         <select
                           value={part.selectedMaterialId}
                           onChange={(e) => updatePartConfig(part.id, { selectedMaterialId: e.target.value })}
-                          className="w-full bg-slate-50 border border-slate-300 rounded-lg px-2.5 py-1.5 text-slate-800 font-semibold focus:border-blue-500 outline-none"
+                          className="w-full bg-slate-50 border border-slate-300 rounded-lg px-2.5 py-1.5 text-slate-800 font-semibold focus:border-red-500 outline-none"
                         >
                           {getFdmMaterials().map((m) => (
                             <option key={m.id} value={m.id}>
@@ -620,7 +620,7 @@ export default function QuotePage() {
                         <select
                           value={part.infillPercent}
                           onChange={(e) => updatePartConfig(part.id, { infillPercent: parseInt(e.target.value) })}
-                          className="w-full bg-slate-50 border border-slate-300 rounded-lg px-2.5 py-1.5 text-slate-800 font-semibold focus:border-blue-500 outline-none"
+                          className="w-full bg-slate-50 border border-slate-300 rounded-lg px-2.5 py-1.5 text-slate-800 font-semibold focus:border-red-500 outline-none"
                         >
                           <option value={20}>20% (Standard)</option>
                           <option value={40}>40% (Structural)</option>
@@ -637,7 +637,7 @@ export default function QuotePage() {
                         <select
                           value={part.layerHeightMm}
                           onChange={(e) => updatePartConfig(part.id, { layerHeightMm: parseFloat(e.target.value) })}
-                          className="w-full bg-slate-50 border border-slate-300 rounded-lg px-2.5 py-1.5 text-slate-800 font-semibold focus:border-blue-500 outline-none"
+                          className="w-full bg-slate-50 border border-slate-300 rounded-lg px-2.5 py-1.5 text-slate-800 font-semibold focus:border-red-500 outline-none"
                         >
                           <option value={0.12}>0.12mm (Ultra Fine)</option>
                           <option value={0.20}>0.20mm (Standard)</option>
@@ -659,13 +659,13 @@ export default function QuotePage() {
                                 quantity: Math.max(1, parseInt(e.target.value) || 1),
                               })
                             }
-                            className="w-full bg-slate-50 border border-slate-300 rounded-lg px-2 py-1.5 text-slate-800 font-mono text-center font-bold focus:border-blue-500 outline-none"
+                            className="w-full bg-slate-50 border border-slate-300 rounded-lg px-2 py-1.5 text-slate-800 font-mono text-center font-bold focus:border-red-500 outline-none"
                           />
                         </div>
                         <button
                           type="button"
                           onClick={() => handleUnitChange(part, part.unit === "mm" ? "inch" : "mm")}
-                          className="px-2.5 py-1.5 bg-slate-100 border border-slate-300 hover:border-blue-500 text-[11px] font-mono text-slate-700 rounded-lg font-bold"
+                          className="px-2.5 py-1.5 bg-slate-100 border border-slate-300 hover:border-red-500 text-[11px] font-mono text-slate-700 rounded-lg font-bold"
                           title="Toggle mm / inch unit"
                         >
                           {part.unit}
@@ -699,7 +699,7 @@ export default function QuotePage() {
             {/* 3D WebGL Part Preview */}
             <div className="space-y-2">
               <div className="flex items-center justify-between text-xs font-mono text-slate-500">
-                <span className="flex items-center gap-1.5 text-blue-600 font-bold">
+                <span className="flex items-center gap-1.5 text-red-600 font-bold">
                   <Sparkles className="w-3.5 h-3.5" /> 3D CAD INSPECTOR
                 </span>
                 <span>Orbit • Zoom • Pan</span>
@@ -726,11 +726,11 @@ export default function QuotePage() {
             <div className="p-6 rounded-2xl border border-slate-200 bg-white shadow-md space-y-5">
               <div className="flex items-center justify-between border-b border-slate-100 pb-3">
                 <h3 className="font-bold text-base text-slate-900 flex items-center gap-2">
-                  <Scale className="w-4 h-4 text-blue-600" />
+                  <Scale className="w-4 h-4 text-red-600" />
                   Quotation Breakdown (EGP)
                 </h3>
                 <span className="text-xs font-mono text-slate-500 flex items-center gap-1 font-semibold">
-                  <Clock className="w-3.5 h-3.5 text-blue-600" /> ~{maxLeadDays} Days Lead Time
+                  <Clock className="w-3.5 h-3.5 text-red-600" /> ~{maxLeadDays} Days Lead Time
                 </span>
               </div>
 
@@ -750,7 +750,7 @@ export default function QuotePage() {
 
                 <div className="flex justify-between items-center">
                   <span className="text-slate-500 flex items-center gap-1">
-                    <Truck className="w-3.5 h-3.5 text-blue-600" />
+                    <Truck className="w-3.5 h-3.5 text-red-600" />
                     Express Egypt Delivery ({totalChargeableWeight.toFixed(2)} kg):
                   </span>
                   <span className="font-bold">{estimatedShipping.toFixed(2)} EGP</span>
@@ -758,7 +758,7 @@ export default function QuotePage() {
 
                 <div className="pt-3 border-t border-slate-100 flex justify-between items-baseline text-slate-900 font-bold">
                   <span className="text-sm">Total Estimate:</span>
-                  <span className="text-2xl text-blue-600 font-mono font-black">
+                  <span className="text-2xl text-red-600 font-mono font-black">
                     {finalTotal.toFixed(2)} EGP
                   </span>
                 </div>
@@ -774,7 +774,7 @@ export default function QuotePage() {
                   value={customerNotes}
                   onChange={(e) => setCustomerNotes(e.target.value)}
                   placeholder="e.g. Critical hole diameter, tapped brass insert requirement, color preference..."
-                  className="w-full bg-slate-50 border border-slate-300 rounded-xl p-3 text-xs text-slate-800 placeholder-slate-400 focus:border-blue-500 outline-none resize-none"
+                  className="w-full bg-slate-50 border border-slate-300 rounded-xl p-3 text-xs text-slate-800 placeholder-slate-400 focus:border-red-500 outline-none resize-none"
                 />
               </div>
 
@@ -783,7 +783,7 @@ export default function QuotePage() {
                 <button
                   disabled={isSubmitting || parts.length === 0}
                   onClick={() => handleProceedToCheckout(false)}
-                  className="w-full py-3.5 px-4 rounded-xl text-sm font-bold text-white bg-blue-600 hover:bg-blue-700 shadow-md shadow-blue-500/20 flex items-center justify-center gap-2 transition-all hover:shadow-lg disabled:opacity-50"
+                  className="w-full py-3.5 px-4 rounded-xl text-sm font-bold text-white bg-red-600 hover:bg-red-700 shadow-md shadow-red-500/20 flex items-center justify-center gap-2 transition-all hover:shadow-lg disabled:opacity-50"
                 >
                   {isSubmitting ? (
                     <span>Submitting Order...</span>
@@ -800,7 +800,7 @@ export default function QuotePage() {
                   onClick={() => handleProceedToCheckout(true)}
                   className="w-full py-2.5 px-4 rounded-xl text-xs font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 border border-slate-200 flex items-center justify-center gap-1.5 transition-colors disabled:opacity-50"
                 >
-                  <ShieldCheck className="w-4 h-4 text-blue-600" />
+                  <ShieldCheck className="w-4 h-4 text-red-600" />
                   <span>Request Engineering Review (Complex Geometry)</span>
                 </button>
               </div>

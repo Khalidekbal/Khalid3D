@@ -65,11 +65,11 @@ export default function Navbar() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="relative px-4 py-2 rounded-xl text-sm font-bold text-white bg-blue-600 hover:bg-blue-700 flex items-center gap-2 shadow-sm shadow-blue-500/20 transition-all hover:shadow-md hover:shadow-blue-500/30 mx-1"
+                  className="relative px-4 py-2 rounded-xl text-sm font-bold text-white bg-red-600 hover:bg-red-700 flex items-center gap-2 shadow-sm shadow-red-500/20 transition-all hover:shadow-md hover:shadow-red-500/30 mx-1"
                 >
                   <Icon className="w-4 h-4" />
                   <span>{link.label}</span>
-                  <span className="w-2 h-2 rounded-full bg-blue-200 animate-ping absolute -top-0.5 -right-0.5" />
+                  <span className="w-2 h-2 rounded-full bg-red-200 animate-ping absolute -top-0.5 -right-0.5" />
                 </Link>
               );
             }
@@ -80,7 +80,7 @@ export default function Navbar() {
                 href={link.href}
                 className={`px-3.5 py-2 rounded-xl text-sm font-medium flex items-center gap-2 transition-colors ${
                   isActive
-                    ? "text-blue-600 bg-blue-50/80 font-semibold"
+                    ? "text-red-600 bg-red-50/80 font-semibold"
                     : "text-slate-600 hover:text-slate-900 hover:bg-slate-100"
                 }`}
               >
@@ -107,7 +107,7 @@ export default function Navbar() {
             className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-slate-200 bg-slate-50 hover:bg-slate-100 text-xs font-semibold text-slate-700 transition-colors shadow-2xs"
             title="Change language / تغيير اللغة"
           >
-            <Languages className="w-3.5 h-3.5 text-blue-600" />
+            <Languages className="w-3.5 h-3.5 text-red-600" />
             <span className="font-mono">{language === "en" ? "العربية 🇪🇬" : "English 🇺🇸"}</span>
           </button>
 
@@ -118,7 +118,7 @@ export default function Navbar() {
                 onClick={() => setUserMenuOpen(!userMenuOpen)}
                 className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-100 border border-slate-200 hover:border-slate-300 text-xs font-semibold text-slate-800 transition-colors"
               >
-                <div className="w-6 h-6 rounded-full bg-blue-600 text-white flex items-center justify-center text-[10px] font-bold">
+                <div className="w-6 h-6 rounded-full bg-red-600 text-white flex items-center justify-center text-[10px] font-bold">
                   {user.name.charAt(0).toUpperCase()}
                 </div>
                 <div className="text-left hidden lg:block max-w-[120px] truncate">
@@ -141,7 +141,7 @@ export default function Navbar() {
                       className={`inline-block mt-1 text-[10px] font-mono font-bold px-2 py-0.5 rounded ${
                         user.role === "STAFF" || user.role === "ADMIN"
                           ? "bg-amber-100 text-amber-800"
-                          : "bg-blue-100 text-blue-800"
+                          : "bg-red-100 text-red-800"
                       }`}
                     >
                       {user.role === "STAFF" || user.role === "ADMIN" ? "Staff Member" : "Customer"}
@@ -184,7 +184,7 @@ export default function Navbar() {
             <div className="flex items-center gap-2">
               <Link
                 href="/login"
-                className="px-3 py-1.5 rounded-xl text-xs font-bold text-slate-700 hover:text-blue-600 hover:bg-slate-100 transition-colors flex items-center gap-1.5"
+                className="px-3 py-1.5 rounded-xl text-xs font-bold text-slate-700 hover:text-red-600 hover:bg-slate-100 transition-colors flex items-center gap-1.5"
               >
                 <LogIn className="w-3.5 h-3.5" />
                 <span>{t.nav.signIn}</span>
@@ -210,7 +210,7 @@ export default function Navbar() {
           </button>
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="p-2 text-slate-700 hover:text-blue-600"
+            className="p-2 text-slate-700 hover:text-red-600"
           >
             {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
@@ -229,7 +229,7 @@ export default function Navbar() {
                 onClick={() => setMobileMenuOpen(false)}
                 className="flex items-center gap-3 px-3 py-2 rounded-xl text-sm font-semibold text-slate-700 hover:bg-slate-100"
               >
-                <Icon className="w-4 h-4 text-blue-600" />
+                <Icon className="w-4 h-4 text-red-600" />
                 <span>{link.label}</span>
               </Link>
             );
@@ -261,7 +261,7 @@ export default function Navbar() {
                 <Link
                   href="/register"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="text-center py-2 rounded-xl text-xs font-bold bg-blue-600 text-white"
+                  className="text-center py-2 rounded-xl text-xs font-bold bg-red-600 text-white"
                 >
                   {t.nav.register}
                 </Link>

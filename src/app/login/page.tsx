@@ -86,7 +86,7 @@ export default function LoginPage() {
             }}
             className={`py-2.5 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-2 ${
               portal === "CUSTOMER"
-                ? "bg-white text-blue-600 shadow-sm"
+                ? "bg-white text-red-600 shadow-sm"
                 : "text-slate-500 hover:text-slate-900"
             }`}
           >
@@ -140,7 +140,7 @@ export default function LoginPage() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder={portal === "STAFF" ? "staff@khalid3d.com" : "customer@khalid3d.com"}
-                  className="w-full px-3.5 py-2.5 text-sm rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all bg-slate-50/50"
+                  className="w-full px-3.5 py-2.5 text-sm rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all bg-slate-50/50"
                 />
                 <Mail className={`w-4 h-4 text-slate-400 absolute top-3.5 ${isRtl ? "left-3.5" : "right-3.5"}`} />
               </div>
@@ -157,7 +157,7 @@ export default function LoginPage() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••"
-                  className="w-full px-3.5 py-2.5 text-sm rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all bg-slate-50/50"
+                  className="w-full px-3.5 py-2.5 text-sm rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all bg-slate-50/50"
                 />
                 <Lock className={`w-4 h-4 text-slate-400 absolute top-3.5 ${isRtl ? "left-3.5" : "right-3.5"}`} />
               </div>
@@ -169,7 +169,7 @@ export default function LoginPage() {
               className={`w-full py-3 px-4 rounded-xl text-xs font-bold text-white transition-all shadow-md flex items-center justify-center gap-2 ${
                 portal === "STAFF"
                   ? "bg-amber-600 hover:bg-amber-700 shadow-amber-500/20"
-                  : "bg-blue-600 hover:bg-blue-700 shadow-blue-500/20"
+                  : "bg-red-600 hover:bg-red-700 shadow-red-500/20"
               } ${submitting ? "opacity-75 cursor-not-allowed" : ""}`}
             >
               {submitting ? (
@@ -192,7 +192,7 @@ export default function LoginPage() {
               <button
                 type="button"
                 onClick={() => handleQuickFill("CUSTOMER")}
-                className="py-1.5 px-2 rounded-lg bg-blue-50 hover:bg-blue-100 text-blue-700 text-[11px] font-bold transition-colors border border-blue-200 flex items-center justify-center gap-1"
+                className="py-1.5 px-2 rounded-lg bg-red-50 hover:bg-red-100 text-red-700 text-[11px] font-bold transition-colors border border-red-200 flex items-center justify-center gap-1"
               >
                 <Sparkles className="w-3 h-3" />
                 <span>Demo Customer</span>
@@ -213,7 +213,7 @@ export default function LoginPage() {
         {portal === "CUSTOMER" && (
           <div className="text-center text-xs text-slate-600">
             <span>{t.auth.noAccount} </span>
-            <Link href="/register" className="font-bold text-blue-600 hover:underline">
+            <Link href="/register" className="font-bold text-red-600 hover:underline">
               {t.auth.registerBtn}
             </Link>
           </div>

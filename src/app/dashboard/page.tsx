@@ -302,9 +302,9 @@ export default function StaffDashboardPage() {
         <div>
           <div className="flex items-center gap-2">
             <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-slate-900 font-mono">
-              KHALID3D <span className="text-blue-600">STAFF OPS HUB</span>
+              KHALID3D <span className="text-red-600">STAFF OPS HUB</span>
             </h1>
-            <span className="text-[11px] font-mono bg-blue-50 text-blue-700 border border-blue-200 px-2 py-0.5 rounded font-bold uppercase">
+            <span className="text-[11px] font-mono bg-red-50 text-red-700 border border-red-200 px-2 py-0.5 rounded font-bold uppercase">
               Role: {user?.role || "STAFF"}
             </span>
           </div>
@@ -319,7 +319,7 @@ export default function StaffDashboardPage() {
             onClick={() => setActiveTab("ORDERS")}
             className={`px-3.5 py-2 text-xs font-mono font-bold rounded-lg transition-colors flex items-center gap-1.5 ${
               activeTab === "ORDERS"
-                ? "bg-blue-600 text-white shadow-xs"
+                ? "bg-red-600 text-white shadow-xs"
                 : "text-slate-600 hover:text-slate-900"
             }`}
           >
@@ -331,7 +331,7 @@ export default function StaffDashboardPage() {
             onClick={() => setActiveTab("PRICING")}
             className={`px-3.5 py-2 text-xs font-mono font-bold rounded-lg transition-colors flex items-center gap-1.5 ${
               activeTab === "PRICING"
-                ? "bg-blue-600 text-white shadow-xs"
+                ? "bg-red-600 text-white shadow-xs"
                 : "text-slate-600 hover:text-slate-900"
             }`}
           >
@@ -343,7 +343,7 @@ export default function StaffDashboardPage() {
             onClick={() => setActiveTab("REVIEWS")}
             className={`px-3.5 py-2 text-xs font-mono font-bold rounded-lg transition-colors flex items-center gap-1.5 ${
               activeTab === "REVIEWS"
-                ? "bg-blue-600 text-white shadow-xs"
+                ? "bg-red-600 text-white shadow-xs"
                 : "text-slate-600 hover:text-slate-900"
             }`}
           >
@@ -355,7 +355,7 @@ export default function StaffDashboardPage() {
             onClick={() => setActiveTab("CATALOG")}
             className={`px-3.5 py-2 text-xs font-mono font-bold rounded-lg transition-colors flex items-center gap-1.5 ${
               activeTab === "CATALOG"
-                ? "bg-blue-600 text-white shadow-xs"
+                ? "bg-red-600 text-white shadow-xs"
                 : "text-slate-600 hover:text-slate-900"
             }`}
           >
@@ -377,7 +377,7 @@ export default function StaffDashboardPage() {
                 placeholder="Search order #, customer..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-9 pr-4 py-2 bg-white border border-slate-300 rounded-xl text-xs text-slate-900 placeholder-slate-400 focus:border-blue-500 outline-none shadow-2xs"
+                className="w-full pl-9 pr-4 py-2 bg-white border border-slate-300 rounded-xl text-xs text-slate-900 placeholder-slate-400 focus:border-red-500 outline-none shadow-2xs"
               />
             </div>
 
@@ -396,7 +396,7 @@ export default function StaffDashboardPage() {
                   onClick={() => setSelectedStatus(st)}
                   className={`px-2.5 py-1 text-[11px] font-mono rounded-lg transition-colors whitespace-nowrap ${
                     selectedStatus === st
-                      ? "bg-blue-600 text-white font-bold"
+                      ? "bg-red-600 text-white font-bold"
                       : "text-slate-600 hover:text-slate-900"
                   }`}
                 >
@@ -438,7 +438,7 @@ export default function StaffDashboardPage() {
                         <div className="text-[11px] text-slate-400">{o.customer?.email}</div>
                       </td>
                       <td className="px-4 py-3.5">
-                        <span className="font-semibold text-blue-600">
+                        <span className="font-semibold text-red-600">
                           {o.items[0]?.material?.name || "PLA Tough"}
                         </span>
                         <span className="text-slate-400 ml-1">({o.items.length} parts)</span>
@@ -457,7 +457,7 @@ export default function StaffDashboardPage() {
                       <td className="px-4 py-3.5 text-right">
                         <button
                           onClick={() => openOrderInspection(o)}
-                          className="px-3 py-1.5 bg-blue-50 text-blue-700 hover:bg-blue-100 border border-blue-200 rounded-lg text-xs font-semibold flex items-center gap-1 ml-auto"
+                          className="px-3 py-1.5 bg-red-50 text-red-700 hover:bg-red-100 border border-red-200 rounded-lg text-xs font-semibold flex items-center gap-1 ml-auto"
                         >
                           <Eye className="w-3.5 h-3.5" />
                           <span>Inspect CAM</span>
@@ -475,8 +475,8 @@ export default function StaffDashboardPage() {
       {/* TAB 2: PRICING MATRIX ENGINE (EGP PER GRAM & MINUTE) */}
       {activeTab === "PRICING" && (
         <div className="space-y-6">
-          <div className="p-4 rounded-2xl bg-blue-50 border border-blue-200 text-xs text-blue-950 flex items-center gap-3">
-            <Scale className="w-6 h-6 text-blue-600 shrink-0" />
+          <div className="p-4 rounded-2xl bg-red-50 border border-red-200 text-xs text-red-950 flex items-center gap-3">
+            <Scale className="w-6 h-6 text-red-600 shrink-0" />
             <div>
               <span className="font-bold block text-sm">Khalid3D Dynamic Pricing Formula</span>
               Price (EGP) = (Weight in Grams × <strong>Cost/Gram</strong>) + (Machine Print Minutes × <strong>Cost/Minute</strong>) + <strong>Setup Fee</strong>
@@ -489,8 +489,8 @@ export default function StaffDashboardPage() {
                 <tr>
                   <th className="px-4 py-3">Material Name</th>
                   <th className="px-4 py-3">Density (g/cm³)</th>
-                  <th className="px-4 py-3 text-blue-700 font-bold">Cost / Gram (EGP)</th>
-                  <th className="px-4 py-3 text-blue-700 font-bold">Cost / Minute (EGP)</th>
+                  <th className="px-4 py-3 text-red-700 font-bold">Cost / Gram (EGP)</th>
+                  <th className="px-4 py-3 text-red-700 font-bold">Cost / Minute (EGP)</th>
                   <th className="px-4 py-3">Setup Fee (EGP)</th>
                   <th className="px-4 py-3">Chamber (X×Y×Z mm)</th>
                   <th className="px-4 py-3 text-right">Edit</th>
@@ -509,10 +509,10 @@ export default function StaffDashboardPage() {
                       </div>
                     </td>
                     <td className="px-4 py-3.5">{m.density}</td>
-                    <td className="px-4 py-3.5 text-blue-600 font-bold text-sm">
+                    <td className="px-4 py-3.5 text-red-600 font-bold text-sm">
                       {m.costPerGram.toFixed(2)} EGP
                     </td>
-                    <td className="px-4 py-3.5 text-blue-600 font-bold text-sm">
+                    <td className="px-4 py-3.5 text-red-600 font-bold text-sm">
                       {m.costPerMinute.toFixed(2)} EGP
                     </td>
                     <td className="px-4 py-3.5 font-semibold">{m.setupFee.toFixed(2)} EGP</td>
@@ -522,7 +522,7 @@ export default function StaffDashboardPage() {
                     <td className="px-4 py-3.5 text-right">
                       <button
                         onClick={() => setEditingMaterial(m)}
-                        className="px-2.5 py-1 bg-slate-100 hover:bg-blue-50 text-slate-700 hover:text-blue-600 rounded-lg text-xs font-semibold flex items-center gap-1 ml-auto"
+                        className="px-2.5 py-1 bg-slate-100 hover:bg-red-50 text-slate-700 hover:text-red-600 rounded-lg text-xs font-semibold flex items-center gap-1 ml-auto"
                       >
                         <Edit className="w-3.5 h-3.5" />
                         <span>Edit</span>
@@ -596,7 +596,7 @@ export default function StaffDashboardPage() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
           <div className="lg:col-span-5 p-6 rounded-2xl border border-slate-200 bg-white shadow-sm space-y-4">
             <h3 className="font-bold text-sm text-slate-900 font-mono flex items-center gap-2">
-              <PackagePlus className="w-4 h-4 text-blue-600" />
+              <PackagePlus className="w-4 h-4 text-red-600" />
               Publish New Hardware Part (EGP)
             </h3>
 
@@ -608,7 +608,7 @@ export default function StaffDashboardPage() {
                   value={newProductTitle}
                   onChange={(e) => setNewProductTitle(e.target.value)}
                   placeholder="e.g. Quadcopter Arm V3 Set"
-                  className="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-slate-800 outline-none focus:border-blue-500"
+                  className="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-slate-800 outline-none focus:border-red-500"
                 />
               </div>
 
@@ -652,7 +652,7 @@ export default function StaffDashboardPage() {
               <button
                 onClick={handleCreateProduct}
                 disabled={isAddingProduct || !newProductTitle || !newProductPrice}
-                className="w-full py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs transition-colors flex items-center justify-center gap-1.5 disabled:opacity-50 shadow-sm"
+                className="w-full py-2.5 rounded-xl bg-red-600 hover:bg-red-700 text-white font-bold text-xs transition-colors flex items-center justify-center gap-1.5 disabled:opacity-50 shadow-sm"
               >
                 <Save className="w-3.5 h-3.5" />
                 <span>Publish to Public Catalog</span>
@@ -687,14 +687,14 @@ export default function StaffDashboardPage() {
               {/* 3D Model Viewer */}
               <div className="lg:col-span-7 space-y-3">
                 <div className="flex items-center justify-between text-xs font-mono">
-                  <span className="text-blue-600 font-bold">
+                  <span className="text-red-600 font-bold">
                     {inspectingOrder.items[0]?.fileName}
                   </span>
                   {inspectingOrder.items[0]?.fileUrl && (
                     <a
                       href={inspectingOrder.items[0].fileUrl}
                       download={inspectingOrder.items[0].fileName}
-                      className="text-xs text-blue-600 hover:underline flex items-center gap-1 font-semibold"
+                      className="text-xs text-red-600 hover:underline flex items-center gap-1 font-semibold"
                     >
                       <Download className="w-3.5 h-3.5" /> Download STL
                     </a>
@@ -800,7 +800,7 @@ export default function StaffDashboardPage() {
                 <button
                   onClick={handleUpdateOrder}
                   disabled={isUpdatingOrder}
-                  className="w-full py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs transition-colors flex items-center justify-center gap-1.5 shadow-sm"
+                  className="w-full py-2.5 rounded-xl bg-red-600 hover:bg-red-700 text-white font-bold text-xs transition-colors flex items-center justify-center gap-1.5 shadow-sm"
                 >
                   <Save className="w-4 h-4" />
                   <span>Commit CAM Updates</span>
@@ -829,8 +829,8 @@ export default function StaffDashboardPage() {
 
             <div className="space-y-3">
               <div className="grid grid-cols-2 gap-3">
-                <div className="p-3 bg-blue-50/50 rounded-xl border border-blue-200">
-                  <label className="block text-blue-900 mb-1 font-bold">Cost / Gram (EGP)</label>
+                <div className="p-3 bg-red-50/50 rounded-xl border border-red-200">
+                  <label className="block text-red-900 mb-1 font-bold">Cost / Gram (EGP)</label>
                   <input
                     type="number"
                     step="0.05"
@@ -838,11 +838,11 @@ export default function StaffDashboardPage() {
                     onChange={(e) =>
                       setEditingMaterial({ ...editingMaterial, costPerGram: parseFloat(e.target.value) || 0 })
                     }
-                    className="w-full bg-white border border-blue-300 rounded-lg p-2 text-blue-900 font-bold"
+                    className="w-full bg-white border border-red-300 rounded-lg p-2 text-red-900 font-bold"
                   />
                 </div>
-                <div className="p-3 bg-blue-50/50 rounded-xl border border-blue-200">
-                  <label className="block text-blue-900 mb-1 font-bold">Cost / Minute (EGP)</label>
+                <div className="p-3 bg-red-50/50 rounded-xl border border-red-200">
+                  <label className="block text-red-900 mb-1 font-bold">Cost / Minute (EGP)</label>
                   <input
                     type="number"
                     step="0.05"
@@ -850,7 +850,7 @@ export default function StaffDashboardPage() {
                     onChange={(e) =>
                       setEditingMaterial({ ...editingMaterial, costPerMinute: parseFloat(e.target.value) || 0 })
                     }
-                    className="w-full bg-white border border-blue-300 rounded-lg p-2 text-blue-900 font-bold"
+                    className="w-full bg-white border border-red-300 rounded-lg p-2 text-red-900 font-bold"
                   />
                 </div>
               </div>
@@ -922,7 +922,7 @@ export default function StaffDashboardPage() {
                 <button
                   onClick={handleSaveMaterial}
                   disabled={isSavingMaterial}
-                  className="px-5 py-2 bg-blue-600 text-white font-bold rounded-xl hover:bg-blue-700 shadow-sm"
+                  className="px-5 py-2 bg-red-600 text-white font-bold rounded-xl hover:bg-red-700 shadow-sm"
                 >
                   Save Rates (EGP)
                 </button>

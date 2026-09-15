@@ -80,7 +80,7 @@ export default function RegisterPage() {
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   placeholder="e.g. Omar Tarek"
-                  className="w-full px-3.5 py-2.5 text-sm rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all bg-slate-50/50"
+                  className="w-full px-3.5 py-2.5 text-sm rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all bg-slate-50/50"
                 />
                 <User className={`w-4 h-4 text-slate-400 absolute top-3.5 ${isRtl ? "left-3.5" : "right-3.5"}`} />
               </div>
@@ -97,7 +97,7 @@ export default function RegisterPage() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="name@example.com"
-                  className="w-full px-3.5 py-2.5 text-sm rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all bg-slate-50/50"
+                  className="w-full px-3.5 py-2.5 text-sm rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all bg-slate-50/50"
                 />
                 <Mail className={`w-4 h-4 text-slate-400 absolute top-3.5 ${isRtl ? "left-3.5" : "right-3.5"}`} />
               </div>
@@ -113,7 +113,7 @@ export default function RegisterPage() {
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
                   placeholder="+20 10X XXX XXXX"
-                  className="w-full px-3.5 py-2.5 text-sm rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all bg-slate-50/50"
+                  className="w-full px-3.5 py-2.5 text-sm rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all bg-slate-50/50"
                 />
                 <Phone className={`w-4 h-4 text-slate-400 absolute top-3.5 ${isRtl ? "left-3.5" : "right-3.5"}`} />
               </div>
@@ -131,7 +131,7 @@ export default function RegisterPage() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="At least 6 characters"
-                  className="w-full px-3.5 py-2.5 text-sm rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all bg-slate-50/50"
+                  className="w-full px-3.5 py-2.5 text-sm rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all bg-slate-50/50"
                 />
                 <Lock className={`w-4 h-4 text-slate-400 absolute top-3.5 ${isRtl ? "left-3.5" : "right-3.5"}`} />
               </div>
@@ -140,7 +140,7 @@ export default function RegisterPage() {
             <button
               type="submit"
               disabled={submitting}
-              className={`w-full py-3 px-4 rounded-xl text-xs font-bold text-white bg-blue-600 hover:bg-blue-700 transition-all shadow-md shadow-blue-500/20 flex items-center justify-center gap-2 ${
+              className={`w-full py-3 px-4 rounded-xl text-xs font-bold text-white bg-red-600 hover:bg-red-700 transition-all shadow-md shadow-red-500/20 flex items-center justify-center gap-2 ${
                 submitting ? "opacity-75 cursor-not-allowed" : ""
               }`}
             >
@@ -158,7 +158,7 @@ export default function RegisterPage() {
 
         <div className="text-center text-xs text-slate-600">
           <span>{t.auth.hasAccount} </span>
-          <Link href="/login" className="font-bold text-blue-600 hover:underline">
+          <Link href="/login" className="font-bold text-red-600 hover:underline">
             {t.auth.signInBtn}
           </Link>
         </div>

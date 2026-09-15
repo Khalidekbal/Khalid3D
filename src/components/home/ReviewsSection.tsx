@@ -43,8 +43,8 @@ export default function ReviewsSection() {
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
           <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-200 text-xs font-mono font-bold text-blue-700">
-              <Star className="w-3.5 h-3.5 fill-blue-600 text-blue-600" />
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-50 border border-red-200 text-xs font-mono font-bold text-red-700">
+              <Star className="w-3.5 h-3.5 fill-red-600 text-red-600" />
               <span>{t.reviews.badge}</span>
             </div>
             <h2 className="text-2xl sm:text-4xl font-black text-slate-900 mt-2 font-mono tracking-tight">
@@ -67,7 +67,7 @@ export default function ReviewsSection() {
           {reviews.map((rev) => (
             <div
               key={rev.id}
-              className="rounded-2xl border border-slate-200 bg-slate-50/50 p-6 flex flex-col justify-between hover:border-blue-300 hover:shadow-md transition-all space-y-4"
+              className="rounded-2xl border border-slate-200 bg-slate-50/50 p-6 flex flex-col justify-between hover:border-red-300 hover:shadow-md transition-all space-y-4"
             >
               <div className="space-y-3">
                 {/* Rating Stars */}
@@ -101,7 +101,7 @@ export default function ReviewsSection() {
                   {rev.customerName}
                 </div>
                 {rev.partName && (
-                  <div className="text-[11px] font-mono text-blue-600 font-medium truncate mt-0.5">
+                  <div className="text-[11px] font-mono text-red-600 font-medium truncate mt-0.5">
                     Part: {rev.partName}
                   </div>
                 )}
@@ -114,9 +114,9 @@ export default function ReviewsSection() {
         </div>
 
         {/* Bottom Trust Banner */}
-        <div className="p-6 rounded-2xl bg-blue-50 border border-blue-200 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="p-6 rounded-2xl bg-red-50 border border-red-200 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-blue-600 flex items-center justify-center text-white shrink-0">
+            <div className="w-10 h-10 rounded-xl bg-red-600 flex items-center justify-center text-white shrink-0">
               <ShieldCheck className="w-5 h-5" />
             </div>
             <div>
@@ -130,7 +130,7 @@ export default function ReviewsSection() {
           </div>
           <a
             href="/quote"
-            className="px-5 py-2.5 rounded-xl text-xs font-bold text-white bg-blue-600 hover:bg-blue-700 shadow-sm transition-colors whitespace-nowrap"
+            className="px-5 py-2.5 rounded-xl text-xs font-bold text-white bg-red-600 hover:bg-red-700 shadow-sm transition-colors whitespace-nowrap"
           >
             Start Your 3D Print Quote
           </a>

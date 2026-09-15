@@ -173,8 +173,8 @@ export default function OrderDetailPage() {
   if (loading) {
     return (
       <div className="max-w-7xl mx-auto px-4 py-20 flex flex-col items-center justify-center gap-3">
-        <div className="w-10 h-10 border-3 border-blue-600 border-t-transparent rounded-full animate-spin" />
-        <p className="text-xs font-mono font-semibold text-blue-600">Loading Order Telemetry...</p>
+        <div className="w-10 h-10 border-3 border-red-600 border-t-transparent rounded-full animate-spin" />
+        <p className="text-xs font-mono font-semibold text-red-600">Loading Order Telemetry...</p>
       </div>
     );
   }
@@ -184,7 +184,7 @@ export default function OrderDetailPage() {
       <div className="max-w-7xl mx-auto px-4 py-20 text-center">
         <AlertTriangle className="w-12 h-12 text-amber-500 mx-auto mb-3" />
         <h2 className="text-lg font-bold text-slate-800">Order not found</h2>
-        <Link href="/orders" className="text-xs text-blue-600 hover:underline mt-2 inline-block font-semibold">
+        <Link href="/orders" className="text-xs text-red-600 hover:underline mt-2 inline-block font-semibold">
           Return to orders list
         </Link>
       </div>
@@ -201,15 +201,15 @@ export default function OrderDetailPage() {
         <div>
           <Link
             href="/orders"
-            className="inline-flex items-center gap-1 text-xs text-slate-500 hover:text-blue-600 font-mono font-semibold mb-2"
+            className="inline-flex items-center gap-1 text-xs text-slate-500 hover:text-red-600 font-mono font-semibold mb-2"
           >
             <ArrowLeft className="w-3.5 h-3.5" /> Back to Orders
           </Link>
           <div className="flex flex-wrap items-center gap-3">
             <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-slate-900 font-mono">
-              ORDER <span className="text-blue-600">{order.orderNumber}</span>
+              ORDER <span className="text-red-600">{order.orderNumber}</span>
             </h1>
-            <span className="text-xs font-mono font-bold px-3 py-1 rounded-full bg-blue-50 text-blue-700 border border-blue-200">
+            <span className="text-xs font-mono font-bold px-3 py-1 rounded-full bg-red-50 text-red-700 border border-red-200">
               {order.status.replace(/_/g, " ")}
             </span>
           </div>
@@ -230,7 +230,7 @@ export default function OrderDetailPage() {
       <div className="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-6">
         <div className="flex items-center justify-between">
           <h2 className="text-base font-bold text-slate-900 flex items-center gap-2">
-            <Clock className="w-4 h-4 text-blue-600" />
+            <Clock className="w-4 h-4 text-red-600" />
             Khalid3D Manufacturing Timeline
           </h2>
           {order.trackingNumber && (
@@ -253,9 +253,9 @@ export default function OrderDetailPage() {
                 key={step.key}
                 className={`p-3.5 rounded-xl border transition-all flex flex-col justify-between ${
                   isCompleted
-                    ? "bg-slate-50 border-blue-200 text-slate-800"
+                    ? "bg-slate-50 border-red-200 text-slate-800"
                     : isCurrent
-                    ? "bg-blue-50 border-blue-500 ring-2 ring-blue-500/20 text-blue-950 shadow-xs"
+                    ? "bg-red-50 border-red-500 ring-2 ring-red-500/20 text-red-950 shadow-xs"
                     : "bg-slate-50/40 border-slate-200 text-slate-400 opacity-60"
                 }`}
               >
@@ -267,7 +267,7 @@ export default function OrderDetailPage() {
                     {isCompleted ? (
                       <CheckCircle2 className="w-4 h-4 text-emerald-600" />
                     ) : isCurrent ? (
-                      <span className="w-2.5 h-2.5 rounded-full bg-blue-600 animate-ping" />
+                      <span className="w-2.5 h-2.5 rounded-full bg-red-600 animate-ping" />
                     ) : (
                       <span className="w-2.5 h-2.5 rounded-full bg-slate-300" />
                     )}
@@ -282,10 +282,10 @@ export default function OrderDetailPage() {
       </div>
 
       {/* CUSTOMER REVIEW PROMPT BANNER & FORM */}
-      <div className="p-6 rounded-2xl bg-gradient-to-r from-blue-50 via-white to-indigo-50 border border-blue-200 shadow-sm space-y-4">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-blue-100 pb-3">
+      <div className="p-6 rounded-2xl bg-gradient-to-r from-red-50 via-white to-indigo-50 border border-red-200 shadow-sm space-y-4">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-red-100 pb-3">
           <div className="flex items-center gap-2.5">
-            <div className="w-9 h-9 rounded-xl bg-blue-600 flex items-center justify-center text-white">
+            <div className="w-9 h-9 rounded-xl bg-red-600 flex items-center justify-center text-white">
               <Star className="w-5 h-5 fill-white" />
             </div>
             <div>
@@ -341,7 +341,7 @@ export default function OrderDetailPage() {
                 value={reviewComment}
                 onChange={(e) => setReviewComment(e.target.value)}
                 placeholder="Write your thoughts on surface quality, tolerances, delivery speed, and durability..."
-                className="w-full bg-white border border-slate-300 rounded-xl p-3 text-xs text-slate-800 placeholder-slate-400 focus:border-blue-500 outline-none resize-none shadow-2xs"
+                className="w-full bg-white border border-slate-300 rounded-xl p-3 text-xs text-slate-800 placeholder-slate-400 focus:border-red-500 outline-none resize-none shadow-2xs"
               />
             </div>
 
@@ -349,7 +349,7 @@ export default function OrderDetailPage() {
               <button
                 type="submit"
                 disabled={isSubmittingReview || !reviewComment.trim()}
-                className="px-5 py-2.5 rounded-xl text-xs font-bold text-white bg-blue-600 hover:bg-blue-700 shadow-sm transition-colors flex items-center gap-1.5 disabled:opacity-50"
+                className="px-5 py-2.5 rounded-xl text-xs font-bold text-white bg-red-600 hover:bg-red-700 shadow-sm transition-colors flex items-center gap-1.5 disabled:opacity-50"
               >
                 <MessageSquarePlus className="w-4 h-4" />
                 <span>{isSubmittingReview ? "Submitting..." : "Submit Review for Homepage"}</span>
@@ -365,14 +365,14 @@ export default function OrderDetailPage() {
         <div className="lg:col-span-7 space-y-4">
           <div className="flex items-center justify-between">
             <h3 className="text-sm font-bold text-slate-800 flex items-center gap-2">
-              <Box className="w-4 h-4 text-blue-600" />
+              <Box className="w-4 h-4 text-red-600" />
               CAD Inspection View ({selectedItemIndex + 1} of {order.items.length})
             </h3>
             {activeItem?.fileUrl && (
               <a
                 href={activeItem.fileUrl}
                 download={activeItem.fileName}
-                className="text-xs font-mono text-blue-600 hover:text-blue-700 flex items-center gap-1.5 px-3 py-1 rounded-xl bg-white border border-slate-200 shadow-2xs font-semibold"
+                className="text-xs font-mono text-red-600 hover:text-red-700 flex items-center gap-1.5 px-3 py-1 rounded-xl bg-white border border-slate-200 shadow-2xs font-semibold"
               >
                 <Download className="w-3.5 h-3.5" />
                 <span>Download {activeItem.fileName}</span>
@@ -404,7 +404,7 @@ export default function OrderDetailPage() {
                   onClick={() => setSelectedItemIndex(idx)}
                   className={`px-3 py-1.5 text-xs font-mono rounded-lg transition-colors whitespace-nowrap ${
                     selectedItemIndex === idx
-                      ? "bg-blue-600 text-white font-bold shadow-xs"
+                      ? "bg-red-600 text-white font-bold shadow-xs"
                       : "text-slate-600 hover:text-slate-900"
                   }`}
                 >
@@ -446,12 +446,12 @@ export default function OrderDetailPage() {
           {/* CAM Engineering Feedback */}
           <div className="p-5 rounded-2xl border border-slate-200 bg-white shadow-sm space-y-3">
             <h3 className="font-bold text-sm text-slate-900 flex items-center gap-2">
-              <ShieldCheck className="w-4 h-4 text-blue-600" />
+              <ShieldCheck className="w-4 h-4 text-red-600" />
               CAM & Engineering Notes
             </h3>
 
             {order.staffNotes ? (
-              <div className="p-3.5 rounded-xl bg-blue-50 border border-blue-100 text-xs font-mono text-blue-900">
+              <div className="p-3.5 rounded-xl bg-red-50 border border-red-100 text-xs font-mono text-red-900">
                 {order.staffNotes}
               </div>
             ) : (
@@ -472,7 +472,7 @@ export default function OrderDetailPage() {
           {order.shippingAddress && (
             <div className="p-5 rounded-2xl border border-slate-200 bg-white shadow-sm space-y-2">
               <h3 className="font-bold text-sm text-slate-900 flex items-center gap-2">
-                <Truck className="w-4 h-4 text-blue-600" />
+                <Truck className="w-4 h-4 text-red-600" />
                 Delivery Address (Egypt)
               </h3>
               <div className="text-xs font-mono text-slate-600 leading-relaxed">
@@ -509,7 +509,7 @@ export default function OrderDetailPage() {
               </div>
               <div className="pt-2 border-t border-slate-100 flex justify-between items-baseline font-bold text-slate-900 text-base">
                 <span>Total Amount:</span>
-                <span className="text-xl text-blue-600 font-black">{order.totalAmount.toFixed(2)} EGP</span>
+                <span className="text-xl text-red-600 font-black">{order.totalAmount.toFixed(2)} EGP</span>
               </div>
             </div>
           </div>
