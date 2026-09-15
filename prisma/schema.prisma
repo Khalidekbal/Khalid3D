@@ -1,0 +1,160 @@
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id           String    @id @default(uuid())
+  email        String    @unique
+  passwordHash String?
+  name         String
+  role         String    @default("CUSTOMER") // CUSTOMER, STAFF, ADMIN
+  phone        String?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  addresses    Address[]
+  orders       Order[]
+}
+
+model Address {
+  id         String   @id @default(uuid())
+  userId     String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type       String   @default("SHIPPING") // SHIPPING, BILLING
+  street     String
+  city       String
+  state      String
+  postalCode String
+  country    String   @default("Egypt")
+  createdAt  DateTime @default(now())
+  orders     Order[]
+}
+
+model PrinterTechnology {
+  id           String      @id @default(uuid())
+  name         String      @unique // FDM
+  description  String
+  leadTimeDays Int         @default(2)
+  materials    Material[]
+  orderItems   OrderItem[]
+}
+
+model Material {
+  id               String            @id @default(uuid())
+  technologyId     String
+  technology       PrinterTechnology @relation(fields: [technologyId], references: [id], onDelete: Cascade)
+  name             String            // PLA Tough, PETG Engineering, TPU 95A
+  color            String            @default("Pure White")
+  colorHex         String            @default("#ffffff")
+  density          Float             // g/cm3 (PLA: 1.24, PETG: 1.27, TPU: 1.21)
+  costPerCm3       Float             @default(0.0) // Raw cost per cm3
+  costPerGram      Float             // EGP per gram (Staff configurable)
+  costPerMinute    Float             @default(0.50) // EGP per print minute (Staff configurable)
+  minWallThickness Float             @default(0.8) // mm
+  maxDimX          Float             @default(300.0) // mm build chamber X
+  maxDimY          Float             @default(300.0) // mm build chamber Y
+  maxDimZ          Float             @default(400.0) // mm build chamber Z
+  setupFee         Float             @default(20.0) // Base setup in EGP
+  infillMultiplier Float             @default(1.0)
+  supportFactor    Float             @default(0.35)
+  isAvailable      Boolean           @default(true)
+  sortOrder        Int               @default(0)
+  orderItems       OrderItem[]
+}
+
+model FinishingOption {
+  id          String      @id @default(uuid())
+  name        String
+  description String
+  costType    String      // FLAT, PER_CM2, PER_GRAM
+  costValue   Float       // Cost in EGP
+  orderItems  OrderItem[]
+}
+
+model Order {
+  id                  String      @id @default(uuid())
+  orderNumber         String      @unique
+  customerId          String
+  customer            User        @relation(fields: [customerId], references: [id])
+  status              String      @default("QUOTED") 
+  // QUOTED, PAYMENT_RECEIVED, IN_PRODUCTION, POST_PROCESSING, QC_PASSED, SHIPPED, CANCELLED
+  subtotal            Float       @default(0.0)
+  shippingFee         Float       @default(0.0)
+  tax                 Float       @default(0.0)
+  discount            Float       @default(0.0)
+  totalAmount         Float       @default(0.0)
+  shippingAddressId   String?
+  shippingAddress     Address?    @relation(fields: [shippingAddressId], references: [id])
+  trackingNumber      String?
+  carrier             String?     // Bosta, Aramex, Egypt Post, DHL
+  staffNotes          String?
+  customerNotes       String?
+  isEngineeringReview Boolean     @default(false)
+  createdAt           DateTime    @default(now())
+  updatedAt           DateTime    @updatedAt
+  items               OrderItem[]
+  reviews             Review[]
+}
+
+model OrderItem {
+  id                String            @id @default(uuid())
+  orderId           String
+  order             Order             @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  fileName          String
+  fileUrl           String?
+  fileFormat        String            @default("STL") // STL, 3MF
+  dimX              Float
+  dimY              Float
+  dimZ              Float
+  volumeCm3         Float
+  surfaceAreaCm2    Float
+  weightGrams       Float             @default(0.0)
+  printMinutes      Int               @default(0)
+  unitUsed          String            @default("mm") // mm, inch, cm
+  technologyId      String
+  technology        PrinterTechnology @relation(fields: [technologyId], references: [id])
+  materialId        String
+  material          Material          @relation(fields: [materialId], references: [id])
+  infillPercent     Int               @default(20)
+  layerHeightMm     Float             @default(0.2)
+  finishingOptionId String?
+  finishingOption   FinishingOption?  @relation(fields: [finishingOptionId], references: [id])
+  quantity          Int               @default(1)
+  unitPrice         Float             @default(0.0) // EGP
+  totalPrice        Float             @default(0.0) // EGP
+  reviewStatus      String            @default("APPROVED") // APPROVED, REQUIRES_MODIFICATION, REJECTED
+  dfmWarnings       String?           // JSON string
+  createdAt         DateTime          @default(now())
+}
+
+model Review {
+  id           String   @id @default(uuid())
+  orderId      String?
+  order        Order?   @relation(fields: [orderId], references: [id], onDelete: SetNull)
+  customerName String
+  rating       Int      @default(5) // 1 to 5 stars
+  comment      String
+  partName     String?
+  materialUsed String?  @default("PLA Tough")
+  isApproved   Boolean  @default(true)
+  createdAt    DateTime @default(now())
+}
+
+model Product {
+  id          String   @id @default(uuid())
+  title       String
+  slug        String   @unique
+  description String
+  images      String   // JSON string array of images
+  technology  String   @default("FDM")
+  material    String   @default("PLA Tough")
+  price       Float    // EGP
+  stock       Int      @default(50)
+  isPublished Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
