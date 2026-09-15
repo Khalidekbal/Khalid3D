@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from "@/context/AuthContext";
+import { LanguageProvider } from "@/context/LanguageContext";
 import Navbar from "@/components/layout/Navbar";
 import BrandLogo from "@/components/brand/BrandLogo";
 import Link from "next/link";
@@ -48,9 +49,10 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-slate-50 text-slate-900 font-sans">
-        <AuthProvider>
-          <Navbar />
-          <main className="flex-1 flex flex-col">{children}</main>
+        <LanguageProvider>
+          <AuthProvider>
+            <Navbar />
+            <main className="flex-1 flex flex-col">{children}</main>
           <footer className="border-t border-slate-200 bg-white py-12 px-4 sm:px-6 lg:px-8 mt-auto">
             <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
               {/* Col 1: Brand */}
@@ -114,7 +116,8 @@ export default function RootLayout({
               </div>
             </div>
           </footer>
-        </AuthProvider>
+          </AuthProvider>
+        </LanguageProvider>
       </body>
     </html>
   );

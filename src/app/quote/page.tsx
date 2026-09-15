@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
+import { useLanguage } from "@/context/LanguageContext";
 import ThreeViewer from "@/components/viewer/ThreeViewer";
 import { analyzeMeshBuffer, MeshAnalysisResult } from "@/lib/worker/mesh-analyzer";
 import {
@@ -84,6 +85,7 @@ export interface ConfiguredPart {
 
 export default function QuotePage() {
   const router = useRouter();
+  const { t, isRtl } = useLanguage();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const [technologies, setTechnologies] = useState<TechnologyItem[]>([]);
@@ -409,14 +411,14 @@ export default function QuotePage() {
         <div>
           <div className="flex items-center gap-2">
             <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-slate-900 font-mono">
-              FDM 3D CAD <span className="text-blue-600">INSTANT QUOTE</span>
+              {t.quote.title}
             </h1>
             <span className="text-[11px] font-mono bg-blue-50 text-blue-700 border border-blue-200 px-2 py-0.5 rounded font-bold uppercase">
               EGP Currency
             </span>
           </div>
           <p className="text-sm text-slate-600 mt-1">
-            Drop .STL or .3MF files below. Live quotation based on exact <strong>Part Weight (Grams)</strong> and <strong>Machine Time (Minutes)</strong>.
+            {t.quote.subtitle}
           </p>
         </div>
 

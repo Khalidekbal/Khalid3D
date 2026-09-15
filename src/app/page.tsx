@@ -1,327 +1,372 @@
+"use client";
+
+import React, { useState } from "react";
 import Link from "next/link";
+import { useLanguage } from "@/context/LanguageContext";
 import BrandLogo from "@/components/brand/BrandLogo";
 import ReviewsSection from "@/components/home/ReviewsSection";
 import {
   UploadCloud,
-  Box,
   Layers,
-  ShieldCheck,
-  Zap,
   Clock,
-  Award,
-  ArrowRight,
+  ShieldCheck,
   CheckCircle2,
-  Cpu,
+  ArrowRight,
+  ArrowLeft,
+  Truck,
+  Zap,
   Sparkles,
-  Scale,
-  Timer,
+  Cpu,
+  Calculator,
 } from "lucide-react";
 
 export default function HomePage() {
-  const fdmMaterials = [
-    {
-      name: "PLA Tough Industrial",
-      tagline: "High-Resolution Standard Prototyping",
-      density: "1.24 g/cm³",
-      rateGram: "1.25 EGP / g",
-      rateMinute: "0.40 EGP / min",
-      description:
-        "The gold standard for rapid prototyping, architectural models, visual masters, and everyday fixtures. Crisp detail and minimal warping.",
-      features: ["Fine 0.12 - 0.28mm layers", "High tensile rigidity", "Eco-friendly bio-polymer"],
-      color: "from-blue-50 to-indigo-50/40",
-      badgeColor: "bg-blue-100 text-blue-800 border-blue-200",
-      accentBorder: "border-blue-200 hover:border-blue-400",
-    },
-    {
-      name: "PETG Engineering Grade",
-      tagline: "Chemical, UV & Impact Resistant",
-      density: "1.27 g/cm³",
-      rateGram: "1.60 EGP / g",
-      rateMinute: "0.50 EGP / min",
-      description:
-        "Superior layer-to-layer adhesion, high thermal resistance (up to 75°C), and water impermeability. Ideal for mechanical brackets and outdoor drone components.",
-      features: ["Ductile & impact tough", "Weather & water resistant", "Excellent functional strength"],
-      color: "from-orange-50 to-amber-50/40",
-      badgeColor: "bg-orange-100 text-orange-800 border-orange-200",
-      accentBorder: "border-orange-200 hover:border-orange-400",
-    },
-    {
-      name: "TPU 95A Flexible",
-      tagline: "Elastomeric Gaskets, Dampers & Seals",
-      density: "1.21 g/cm³",
-      rateGram: "2.40 EGP / g",
-      rateMinute: "0.70 EGP / min",
-      description:
-        "High-elasticity rubber-like filament capable of repeated flex cycles without tearing. Perfect for custom O-rings, robotics tires, phone cases, and shock absorbers.",
-      features: ["Shore 95A flexible hardness", "Abrasion & oil resistant", "High damping absorption"],
-      color: "from-emerald-50 to-teal-50/40",
-      badgeColor: "bg-emerald-100 text-emerald-800 border-emerald-200",
-      accentBorder: "border-emerald-200 hover:border-emerald-400",
-    },
-  ];
+  const { t, isRtl } = useLanguage();
+
+  // Live Cost Estimator state
+  const [estGrams, setEstGrams] = useState(45);
+  const [estMinutes, setEstMinutes] = useState(120);
+  const [estMaterial, setEstMaterial] = useState<"PLA" | "PETG" | "TPU">("PLA");
+
+  const materialRates = {
+    PLA: { gramRate: 1.5, minRate: 0.8, setup: 20, name: "PLA Tough" },
+    PETG: { gramRate: 1.95, minRate: 0.95, setup: 25, name: "PETG Industrial" },
+    TPU: { gramRate: 2.8, minRate: 1.3, setup: 35, name: "TPU 95A Flexible" },
+  };
+
+  const currentRate = materialRates[estMaterial];
+  const gramCost = estGrams * currentRate.gramRate;
+  const minuteCost = estMinutes * currentRate.minRate;
+  const estimatedTotal = Math.round(gramCost + minuteCost + currentRate.setup);
 
   return (
-    <div className="flex flex-col min-h-screen bg-slate-50 text-slate-900">
-      {/* Hero Section */}
-      <section className="relative overflow-hidden pt-12 pb-20 md:pt-20 md:pb-28 border-b border-slate-200 bg-white bg-grid-pattern">
-        {/* Soft Ambient Radial Glow */}
-        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] bg-blue-500/10 blur-[100px] rounded-full pointer-events-none" />
-
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="text-center max-w-3xl mx-auto space-y-6">
-            {/* Dynamic Animated Logo Badge */}
-            <div className="inline-flex items-center justify-center p-2 rounded-2xl bg-white border border-slate-200 shadow-sm animate-logo-float mb-2">
-              <BrandLogo size="lg" showText={false} withMotion={true} />
-            </div>
-
-            {/* Top Pill */}
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-blue-50 border border-blue-200 text-xs font-mono font-bold text-blue-700">
-              <span className="w-2 h-2 rounded-full bg-blue-600 animate-pulse" />
-              <span>Egypt's Premier FDM 3D Printing Service</span>
-            </div>
-
-            {/* Main Headline */}
-            <h1 className="text-4xl sm:text-6xl font-black tracking-tight text-slate-900 font-mono leading-tight">
-              PRECISION FDM 3D PRINTING <br />
-              <span className="bg-gradient-to-r from-blue-700 via-blue-600 to-cyan-600 bg-clip-text text-transparent">
-                IN EGYPTIAN POUNDS (EGP)
-              </span>
-            </h1>
-
-            {/* Subtitle */}
-            <p className="text-base sm:text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed">
-              Upload your 3D CAD files for instant real-time quotes calculated directly from <strong>part weight (grams)</strong> and <strong>print machine time (minutes)</strong>. Fast 48-hour delivery across Cairo, Giza, and all Egyptian governorates.
-            </p>
-
-            {/* CTAs */}
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
-              <Link
-                href="/quote"
-                className="w-full sm:w-auto px-8 py-3.5 rounded-xl text-sm font-bold text-white bg-blue-600 hover:bg-blue-700 shadow-lg shadow-blue-500/25 flex items-center justify-center gap-2 transition-all hover:scale-[1.02]"
-              >
-                <UploadCloud className="w-5 h-5" />
-                <span>Upload STL & Instant Quote (EGP)</span>
-              </Link>
-              <Link
-                href="/catalog"
-                className="w-full sm:w-auto px-6 py-3.5 rounded-xl text-sm font-semibold text-slate-700 bg-white border border-slate-300 hover:bg-slate-50 transition-colors flex items-center justify-center gap-2 shadow-xs"
-              >
-                <Box className="w-4 h-4 text-blue-600" />
-                <span>Explore In-Stock Parts</span>
-              </Link>
-            </div>
-
-            {/* Metrics Ribbon */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-10 border-t border-slate-100 text-left">
-              <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 shadow-xs">
-                <div className="flex items-center gap-1.5 text-blue-600 mb-1">
-                  <Scale className="w-4 h-4" />
-                  <span className="text-[11px] font-mono font-bold uppercase">Weight Rate</span>
-                </div>
-                <div className="text-xl font-bold font-mono text-slate-900">From 1.25 EGP</div>
-                <div className="text-xs text-slate-500">Per gram of filament</div>
+    <div className="space-y-16 sm:space-y-24 pb-16">
+      {/* 1. HERO SECTION & LIVE ESTIMATOR */}
+      <section className="relative pt-8 sm:pt-14 pb-8 overflow-hidden bg-radial from-blue-50/50 via-white to-slate-50 border-b border-slate-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            
+            {/* Left Hero Content */}
+            <div className="lg:col-span-7 space-y-6">
+              {/* Badge */}
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 border border-blue-200 text-xs font-mono font-bold text-blue-700 shadow-2xs">
+                <span className="w-2 h-2 rounded-full bg-blue-600 animate-pulse" />
+                <span>{t.hero.badge}</span>
               </div>
 
-              <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 shadow-xs">
-                <div className="flex items-center gap-1.5 text-blue-600 mb-1">
-                  <Timer className="w-4 h-4" />
-                  <span className="text-[11px] font-mono font-bold uppercase">Machine Rate</span>
-                </div>
-                <div className="text-xl font-bold font-mono text-slate-900">From 0.40 EGP</div>
-                <div className="text-xs text-slate-500">Per print minute</div>
+              {/* Title */}
+              <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight text-slate-900 leading-[1.1] font-mono">
+                {t.hero.titleStart}{" "}
+                <span className="text-blue-600 underline decoration-blue-200 underline-offset-8">
+                  {t.hero.titleHighlight}
+                </span>
+              </h1>
+
+              {/* Punchy Subtitle */}
+              <p className="text-base sm:text-lg text-slate-600 leading-relaxed max-w-xl">
+                {t.hero.subtitle}
+              </p>
+
+              {/* Action Buttons */}
+              <div className="flex flex-wrap items-center gap-4 pt-2">
+                <Link
+                  href="/quote"
+                  className="px-6 py-3.5 rounded-2xl text-sm font-bold text-white bg-blue-600 hover:bg-blue-700 shadow-md shadow-blue-500/25 transition-all hover:-translate-y-0.5 flex items-center gap-2.5"
+                >
+                  <UploadCloud className="w-4 h-4" />
+                  <span>{t.hero.ctaQuote}</span>
+                  {isRtl ? <ArrowLeft className="w-4 h-4" /> : <ArrowRight className="w-4 h-4" />}
+                </Link>
+
+                <Link
+                  href="/catalog"
+                  className="px-6 py-3.5 rounded-2xl text-sm font-bold text-slate-700 bg-white hover:bg-slate-100 border border-slate-200 shadow-2xs transition-all flex items-center gap-2"
+                >
+                  <Layers className="w-4 h-4 text-slate-500" />
+                  <span>{t.hero.ctaCatalog}</span>
+                </Link>
               </div>
 
-              <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 shadow-xs">
-                <div className="flex items-center gap-1.5 text-blue-600 mb-1">
-                  <Clock className="w-4 h-4" />
-                  <span className="text-[11px] font-mono font-bold uppercase">Lead Time</span>
+              {/* Stat Badges */}
+              <div className="grid grid-cols-3 gap-4 pt-6 border-t border-slate-200/80 max-w-lg font-mono">
+                <div>
+                  <div className="text-xl sm:text-2xl font-black text-slate-900">{t.hero.stat1Value}</div>
+                  <div className="text-[11px] text-slate-500">{t.hero.stat1Label}</div>
                 </div>
-                <div className="text-xl font-bold font-mono text-slate-900">48 Hours</div>
-                <div className="text-xs text-slate-500">Fast Cairo/Giza dispatch</div>
-              </div>
-
-              <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 shadow-xs">
-                <div className="flex items-center gap-1.5 text-blue-600 mb-1">
-                  <Award className="w-4 h-4" />
-                  <span className="text-[11px] font-mono font-bold uppercase">FDM Precision</span>
+                <div>
+                  <div className="text-xl sm:text-2xl font-black text-blue-600">{t.hero.stat2Value}</div>
+                  <div className="text-[11px] text-slate-500">{t.hero.stat2Label}</div>
                 </div>
-                <div className="text-xl font-bold font-mono text-slate-900">±0.10 mm</div>
-                <div className="text-xs text-slate-500">Bambu Lab & Voron fleet</div>
+                <div>
+                  <div className="text-xl sm:text-2xl font-black text-slate-900">{t.hero.stat3Value}</div>
+                  <div className="text-[11px] text-slate-500">{t.hero.stat3Label}</div>
+                </div>
               </div>
             </div>
-          </div>
-        </div>
-      </section>
 
-      {/* FDM Materials Showcase */}
-      <section className="py-16 md:py-24 bg-slate-50 border-b border-slate-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
-            <div>
-              <span className="text-xs font-mono uppercase text-blue-600 tracking-wider font-bold">
-                Specialized Additive Materials
-              </span>
-              <h2 className="text-2xl sm:text-4xl font-black text-slate-900 mt-1 font-mono">
-                OUR FDM CAPABILITIES
-              </h2>
-            </div>
-            <p className="text-xs sm:text-sm text-slate-600 max-w-md">
-              We focus 100% on high-quality FDM thermoplastic manufacturing. Choose between rigid prototyping PLA, weather-resistant PETG, or elastomeric TPU.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {fdmMaterials.map((mat) => (
-              <div
-                key={mat.name}
-                className={`rounded-2xl border ${mat.accentBorder} bg-gradient-to-b ${mat.color} p-6 flex flex-col justify-between transition-all hover:-translate-y-1 shadow-sm hover:shadow-md bg-white`}
-              >
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between">
-                    <span className={`text-xs font-mono font-bold px-2.5 py-1 rounded-md border ${mat.badgeColor}`}>
-                      {mat.name}
-                    </span>
-                    <span className="text-xs font-mono text-slate-500 font-semibold">
-                      {mat.density}
-                    </span>
-                  </div>
-
-                  <div>
-                    <h3 className="text-lg font-bold text-slate-900">{mat.tagline}</h3>
-                    <p className="text-xs text-slate-600 mt-2 leading-relaxed">{mat.description}</p>
-                  </div>
-
-                  {/* Pricing Formula Box */}
-                  <div className="p-3 rounded-xl bg-white/90 border border-slate-200 space-y-1.5 text-xs font-mono">
-                    <div className="flex justify-between text-slate-700">
-                      <span>Filament Gram Rate:</span>
-                      <span className="font-bold text-blue-600">{mat.rateGram}</span>
+            {/* Right: Live EGP Cost Estimator Card */}
+            <div className="lg:col-span-5">
+              <div className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-xl space-y-6 relative overflow-hidden">
+                <div className="flex items-center justify-between border-b border-slate-100 pb-4">
+                  <div className="flex items-center gap-2.5">
+                    <div className="w-8 h-8 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center">
+                      <Calculator className="w-4 h-4" />
                     </div>
-                    <div className="flex justify-between text-slate-700">
-                      <span>Machine Time Rate:</span>
-                      <span className="font-bold text-blue-600">{mat.rateMinute}</span>
+                    <div>
+                      <h3 className="font-bold text-sm text-slate-900">{t.estimator.title}</h3>
+                      <p className="text-[11px] text-slate-500">{t.estimator.subtitle}</p>
                     </div>
                   </div>
+                  <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 border border-emerald-200 font-bold">
+                    EGP Rates
+                  </span>
+                </div>
 
-                  {/* Bullet points */}
-                  <div className="space-y-1.5 pt-2">
-                    {mat.features.map((f, idx) => (
-                      <div key={idx} className="flex items-center gap-2 text-xs text-slate-700">
-                        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
-                        <span>{f}</span>
-                      </div>
+                {/* Filament Selector Tabs */}
+                <div>
+                  <label className="block text-xs font-semibold text-slate-700 mb-2">
+                    {t.estimator.materialLabel}
+                  </label>
+                  <div className="grid grid-cols-3 gap-1.5 p-1 bg-slate-100 rounded-xl border border-slate-200">
+                    {(["PLA", "PETG", "TPU"] as const).map((mat) => (
+                      <button
+                        key={mat}
+                        type="button"
+                        onClick={() => setEstMaterial(mat)}
+                        className={`py-2 text-xs font-mono font-bold rounded-lg transition-all ${
+                          estMaterial === mat
+                            ? "bg-white text-blue-600 shadow-sm"
+                            : "text-slate-600 hover:text-slate-900"
+                        }`}
+                      >
+                        {mat}
+                      </button>
                     ))}
                   </div>
                 </div>
 
-                <div className="pt-6">
-                  <Link
-                    href={`/quote?mat=${mat.name.split(" ")[0]}`}
-                    className="w-full py-2.5 px-4 rounded-xl text-xs font-bold text-white bg-blue-600 hover:bg-blue-700 transition-colors flex items-center justify-center gap-1.5 shadow-sm"
-                  >
-                    <span>Instant Quote with {mat.name.split(" ")[0]}</span>
-                    <ArrowRight className="w-3.5 h-3.5" />
-                  </Link>
+                {/* Gram Slider */}
+                <div className="space-y-2">
+                  <div className="flex justify-between items-center text-xs font-mono">
+                    <span className="text-slate-600 font-medium">{t.estimator.weightLabel}:</span>
+                    <span className="font-bold text-slate-900 bg-slate-100 px-2 py-0.5 rounded">
+                      {estGrams} {t.estimator.gramsUnit}
+                    </span>
+                  </div>
+                  <input
+                    type="range"
+                    min={5}
+                    max={500}
+                    step={5}
+                    value={estGrams}
+                    onChange={(e) => setEstGrams(Number(e.target.value))}
+                    className="w-full accent-blue-600 cursor-pointer h-2 bg-slate-100 rounded-lg"
+                  />
+                  <div className="flex justify-between text-[10px] font-mono text-slate-400">
+                    <span>5g</span>
+                    <span>{currentRate.gramRate.toFixed(2)} EGP / g</span>
+                    <span>500g</span>
+                  </div>
                 </div>
+
+                {/* Minutes Slider */}
+                <div className="space-y-2">
+                  <div className="flex justify-between items-center text-xs font-mono">
+                    <span className="text-slate-600 font-medium">{t.estimator.durationLabel}:</span>
+                    <span className="font-bold text-slate-900 bg-slate-100 px-2 py-0.5 rounded">
+                      {estMinutes} {t.estimator.minutesUnit} ({Math.floor(estMinutes / 60)}h {estMinutes % 60}m)
+                    </span>
+                  </div>
+                  <input
+                    type="range"
+                    min={15}
+                    max={720}
+                    step={15}
+                    value={estMinutes}
+                    onChange={(e) => setEstMinutes(Number(e.target.value))}
+                    className="w-full accent-blue-600 cursor-pointer h-2 bg-slate-100 rounded-lg"
+                  />
+                  <div className="flex justify-between text-[10px] font-mono text-slate-400">
+                    <span>15m</span>
+                    <span>{currentRate.minRate.toFixed(2)} EGP / min</span>
+                    <span>12h</span>
+                  </div>
+                </div>
+
+                {/* Calculation Breakdown & Total Price */}
+                <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2 text-xs font-mono">
+                  <div className="flex justify-between text-slate-500">
+                    <span>Material ({estGrams}g × {currentRate.gramRate}):</span>
+                    <span>EGP {gramCost.toFixed(0)}</span>
+                  </div>
+                  <div className="flex justify-between text-slate-500">
+                    <span>Nozzle Runtime ({estMinutes}m × {currentRate.minRate}):</span>
+                    <span>EGP {minuteCost.toFixed(0)}</span>
+                  </div>
+                  <div className="flex justify-between text-slate-500">
+                    <span>{t.estimator.setupFeeLabel}:</span>
+                    <span>EGP {currentRate.setup}</span>
+                  </div>
+                  <div className="pt-2 border-t border-slate-200 flex justify-between items-center text-base font-bold text-slate-900">
+                    <span>{t.estimator.estimatedTotal}:</span>
+                    <span className="text-2xl text-blue-600 font-black">
+                      EGP {estimatedTotal}
+                    </span>
+                  </div>
+                </div>
+
+                {/* Launch Exact Quote Button */}
+                <Link
+                  href={`/quote?mat=${estMaterial}`}
+                  className="w-full py-3.5 px-4 rounded-xl text-xs font-bold text-white bg-slate-900 hover:bg-slate-800 transition-colors flex items-center justify-center gap-2 shadow-sm text-center"
+                >
+                  <UploadCloud className="w-4 h-4 text-blue-400" />
+                  <span>{t.estimator.launchFullQuote}</span>
+                </Link>
               </div>
-            ))}
+            </div>
+
           </div>
         </div>
       </section>
 
-      {/* Customer Reviews Section */}
-      <ReviewsSection />
+      {/* 2. 3-STEP PROCESS */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center max-w-2xl mx-auto space-y-2 mb-12">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-mono font-bold">
+            <Zap className="w-3.5 h-3.5" />
+            <span>{t.process.badge}</span>
+          </div>
+          <h2 className="text-2xl sm:text-4xl font-black text-slate-900 font-mono tracking-tight">
+            {t.process.title}
+          </h2>
+        </div>
 
-      {/* DFM & Slicing Technical Section */}
-      <section className="py-16 md:py-24 bg-slate-50 border-t border-slate-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div className="space-y-6">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-200 text-xs font-mono font-bold text-blue-700">
-                <ShieldCheck className="w-4 h-4 text-blue-600" />
-                <span>Client-Side Geometry Processing</span>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="p-8 rounded-3xl bg-white border border-slate-200 shadow-sm space-y-4 relative">
+            <div className="text-3xl font-black text-blue-600 font-mono">{t.process.s1Number}</div>
+            <h3 className="font-bold text-lg text-slate-900">{t.process.s1Title}</h3>
+            <p className="text-xs text-slate-600 leading-relaxed">{t.process.s1Desc}</p>
+          </div>
+
+          <div className="p-8 rounded-3xl bg-white border border-slate-200 shadow-sm space-y-4 relative">
+            <div className="text-3xl font-black text-blue-600 font-mono">{t.process.s2Number}</div>
+            <h3 className="font-bold text-lg text-slate-900">{t.process.s2Title}</h3>
+            <p className="text-xs text-slate-600 leading-relaxed">{t.process.s2Desc}</p>
+          </div>
+
+          <div className="p-8 rounded-3xl bg-white border border-slate-200 shadow-sm space-y-4 relative">
+            <div className="text-3xl font-black text-blue-600 font-mono">{t.process.s3Number}</div>
+            <h3 className="font-bold text-lg text-slate-900">{t.process.s3Title}</h3>
+            <p className="text-xs text-slate-600 leading-relaxed">{t.process.s3Desc}</p>
+          </div>
+        </div>
+      </section>
+
+      {/* 3. CALIBRATED FDM MATERIALS */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center max-w-2xl mx-auto space-y-2 mb-12">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-mono font-bold">
+            <Layers className="w-3.5 h-3.5" />
+            <span>{t.materials.badge}</span>
+          </div>
+          <h2 className="text-2xl sm:text-4xl font-black text-slate-900 font-mono tracking-tight">
+            {t.materials.title}
+          </h2>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {/* PLA */}
+          <div className="p-8 rounded-3xl bg-white border border-slate-200 shadow-sm space-y-5 flex flex-col justify-between hover:border-blue-300 transition-all">
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-mono font-bold text-blue-600 bg-blue-50 px-2.5 py-1 rounded-lg">
+                  Standard Rigid
+                </span>
+                <span className="text-xs font-mono text-slate-500">1.24 g/cm³</span>
               </div>
-
-              <h2 className="text-3xl sm:text-4xl font-black text-slate-900 font-mono leading-tight">
-                TRANSPARENT GRAMS & MINUTES. <br />
-                ZERO HIDDEN FEES.
-              </h2>
-
-              <p className="text-sm text-slate-600 leading-relaxed">
-                When you drag and drop your STL into Khalid3D, our client-side Web Worker immediately runs the signed tetrahedron algorithm to measure closed mesh volume, computes part weight in grams, and estimates nozzle print minutes in real time.
-              </p>
-
-              <div className="space-y-3 font-mono text-xs text-slate-700">
-                <div className="flex items-start gap-3 p-3.5 rounded-xl bg-white border border-slate-200 shadow-xs">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
-                  <div>
-                    <span className="font-bold text-slate-900">Gram Computation:</span> Exact volume scaled by filament density (PLA 1.24, PETG 1.27, TPU 1.21 g/cm³) and your chosen infill percentage (20%, 40%, 80%, 100%).
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-3 p-3.5 rounded-xl bg-white border border-slate-200 shadow-xs">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
-                  <div>
-                    <span className="font-bold text-slate-900">Minute Slicing Formula:</span> Exact layer count (Z height / layer resolution) and perimeter toolpath travel time.
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-3 p-3.5 rounded-xl bg-white border border-slate-200 shadow-xs">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
-                  <div>
-                    <span className="font-bold text-slate-900">Local Egyptian Delivery:</span> Shipped safely in bubble wrap via Bosta or Aramex directly to your doorstep.
-                  </div>
-                </div>
-              </div>
+              <h3 className="font-bold text-xl text-slate-900">{t.materials.plaTitle}</h3>
+              <p className="text-xs text-slate-600 leading-relaxed">{t.materials.plaDesc}</p>
             </div>
-
-            {/* Visual Formula Card */}
-            <div className="p-8 rounded-2xl bg-white border border-slate-200 shadow-md space-y-6 font-mono text-xs">
-              <div className="flex items-center justify-between border-b border-slate-100 pb-3">
-                <span className="text-blue-600 font-bold flex items-center gap-1.5">
-                  <Cpu className="w-4 h-4" /> Khalid3D_Pricing_Formula.egp
-                </span>
-                <span className="text-[10px] text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200 font-bold">
-                  VERIFIED
-                </span>
-              </div>
-
-              <div className="space-y-2 p-4 rounded-xl bg-slate-50 border border-slate-200 text-slate-800">
-                <div className="text-sm font-bold text-blue-700">
-                  Total Price (EGP) = (Grams × Cost/Gram) + (Minutes × Cost/Minute) + SetupFee
-                </div>
-                <div className="text-slate-500 pt-1 text-[11px]">
-                  Where Cost/Gram and Cost/Minute are calibrated by staff for optimal factory efficiency.
-                </div>
-              </div>
-
-              <div className="space-y-2 text-slate-700 text-[11px]">
-                <div className="flex justify-between">
-                  <span>Example: 45g Bracket in PETG:</span>
-                  <span className="font-bold">45g × 1.60 = 72.00 EGP</span>
-                </div>
-                <div className="flex justify-between">
-                  <span>Print Time: 90 Minutes:</span>
-                  <span className="font-bold">90m × 0.50 = 45.00 EGP</span>
-                </div>
-                <div className="flex justify-between">
-                  <span>Base Job Setup Fee:</span>
-                  <span className="font-bold">25.00 EGP</span>
-                </div>
-                <div className="pt-2 border-t border-slate-200 flex justify-between font-bold text-slate-900 text-sm">
-                  <span>Total Unit Price:</span>
-                  <span className="text-blue-600">142.00 EGP</span>
-                </div>
-              </div>
-
-              <Link
-                href="/quote"
-                className="block text-center py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold transition-colors shadow-sm"
-              >
-                Launch Multi-Part Instant Configurator
+            <div className="pt-4 border-t border-slate-100 flex items-center justify-between font-mono text-xs">
+              <span className="text-slate-500">1.50 EGP / gram</span>
+              <Link href="/quote?mat=PLA" className="font-bold text-blue-600 hover:underline">
+                {t.materials.selectMaterial} →
               </Link>
             </div>
           </div>
+
+          {/* PETG */}
+          <div className="p-8 rounded-3xl bg-white border border-blue-200 shadow-md space-y-5 flex flex-col justify-between hover:border-blue-400 transition-all relative">
+            <span className="absolute -top-3 right-6 text-[10px] font-mono font-bold bg-blue-600 text-white px-2 py-0.5 rounded-full">
+              Engineers' Choice
+            </span>
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-mono font-bold text-blue-700 bg-blue-50 px-2.5 py-1 rounded-lg">
+                  Heat & Impact
+                </span>
+                <span className="text-xs font-mono text-slate-500">1.27 g/cm³</span>
+              </div>
+              <h3 className="font-bold text-xl text-slate-900">{t.materials.petgTitle}</h3>
+              <p className="text-xs text-slate-600 leading-relaxed">{t.materials.petgDesc}</p>
+            </div>
+            <div className="pt-4 border-t border-slate-100 flex items-center justify-between font-mono text-xs">
+              <span className="text-slate-500">1.95 EGP / gram</span>
+              <Link href="/quote?mat=PETG" className="font-bold text-blue-600 hover:underline">
+                {t.materials.selectMaterial} →
+              </Link>
+            </div>
+          </div>
+
+          {/* TPU */}
+          <div className="p-8 rounded-3xl bg-white border border-slate-200 shadow-sm space-y-5 flex flex-col justify-between hover:border-blue-300 transition-all">
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-mono font-bold text-purple-700 bg-purple-50 px-2.5 py-1 rounded-lg">
+                  Elastomer
+                </span>
+                <span className="text-xs font-mono text-slate-500">1.21 g/cm³</span>
+              </div>
+              <h3 className="font-bold text-xl text-slate-900">{t.materials.tpuTitle}</h3>
+              <p className="text-xs text-slate-600 leading-relaxed">{t.materials.tpuDesc}</p>
+            </div>
+            <div className="pt-4 border-t border-slate-100 flex items-center justify-between font-mono text-xs">
+              <span className="text-slate-500">2.80 EGP / gram</span>
+              <Link href="/quote?mat=TPU" className="font-bold text-blue-600 hover:underline">
+                {t.materials.selectMaterial} →
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 4. VERIFIED REVIEWS SECTION */}
+      <ReviewsSection />
+
+      {/* 5. BOTTOM SERVICE GUARANTEE CTA */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="rounded-3xl bg-slate-900 text-white p-8 sm:p-12 flex flex-col md:flex-row items-center justify-between gap-8 shadow-xl">
+          <div className="space-y-3 max-w-xl">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-800 text-blue-400 text-xs font-mono font-bold">
+              <ShieldCheck className="w-4 h-4 text-blue-400" />
+              <span>Calibrated Additive Manufacturing Lab</span>
+            </div>
+            <h3 className="text-2xl sm:text-3xl font-black font-mono">
+              Ready to Manufacture Your 3D Parts?
+            </h3>
+            <p className="text-xs text-slate-400 leading-relaxed">
+              Upload your STL file to test our instant geometry engine. Real-time pricing per gram and per minute with courier delivery anywhere in Egypt.
+            </p>
+          </div>
+
+          <Link
+            href="/quote"
+            className="px-8 py-4 rounded-2xl text-sm font-bold text-slate-950 bg-white hover:bg-slate-100 shadow-lg transition-transform hover:scale-105 shrink-0 flex items-center gap-2 font-mono"
+          >
+            <UploadCloud className="w-4 h-4 text-blue-600" />
+            <span>{t.hero.ctaQuote}</span>
+          </Link>
         </div>
       </section>
     </div>

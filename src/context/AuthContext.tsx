@@ -4,72 +4,124 @@ import React, { createContext, useContext, useState, useEffect } from "react";
 
 export type UserRole = "CUSTOMER" | "STAFF" | "ADMIN";
 
-export interface DemoUser {
+export interface AuthUser {
   id: string;
   name: string;
   email: string;
   role: UserRole;
-  phone?: string;
+  phone?: string | null;
 }
 
-export const DEMO_USERS: Record<UserRole, DemoUser> = {
-  CUSTOMER: {
-    id: "demo-customer-id",
-    name: "Alex Chen",
-    email: "customer@demo.com",
-    role: "CUSTOMER",
-    phone: "+1 (555) 234-5678",
-  },
-  STAFF: {
-    id: "demo-staff-id",
-    name: "Sarah Miller (CAM Engineer)",
-    email: "engineer@jlc3dp.demo",
-    role: "STAFF",
-    phone: "+1 (555) 890-1234",
-  },
-  ADMIN: {
-    id: "demo-admin-id",
-    name: "Marcus Vance (Ops Director)",
-    email: "admin@jlc3dp.demo",
-    role: "ADMIN",
-    phone: "+1 (555) 999-0000",
-  },
-};
-
 interface AuthContextType {
-  user: DemoUser;
-  role: UserRole;
-  switchRole: (role: UserRole) => void;
+  user: AuthUser | null;
+  isLoading: boolean;
+  login: (email: string, pass: string, portal?: "CUSTOMER" | "STAFF") => Promise<{ success: boolean; error?: string }>;
+  register: (name: string, email: string, pass: string, phone?: string) => Promise<{ success: boolean; error?: string }>;
+  logout: () => Promise<void>;
   isStaffOrAdmin: boolean;
 }
 
 const AuthContext = createContext<AuthContextType>({
-  user: DEMO_USERS.CUSTOMER,
-  role: "CUSTOMER",
-  switchRole: () => {},
+  user: null,
+  isLoading: true,
+  login: async () => ({ success: false }),
+  register: async () => ({ success: false }),
+  logout: async () => {},
   isStaffOrAdmin: false,
 });
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [role, setRole] = useState<UserRole>("CUSTOMER");
+  const [user, setUser] = useState<AuthUser | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
+  // Check current session on load
   useEffect(() => {
-    const saved = localStorage.getItem("jlc3dp_role") as UserRole;
-    if (saved && DEMO_USERS[saved]) {
-      setRole(saved);
+    async function checkAuth() {
+      try {
+        const res = await fetch("/api/auth/me");
+        const data = await res.json();
+        if (data.user) {
+          setUser(data.user);
+        } else {
+          // Check local storage fallback for offline/demo compatibility
+          const cached = localStorage.getItem("khalid3d_user");
+          if (cached) {
+            setUser(JSON.parse(cached));
+          }
+        }
+      } catch {
+        const cached = localStorage.getItem("khalid3d_user");
+        if (cached) {
+          setUser(JSON.parse(cached));
+        }
+      } finally {
+        setIsLoading(false);
+      }
     }
+    checkAuth();
   }, []);
 
-  const switchRole = (newRole: UserRole) => {
-    setRole(newRole);
-    localStorage.setItem("jlc3dp_role", newRole);
+  const login = async (email: string, pass: string, portal: "CUSTOMER" | "STAFF" = "CUSTOMER") => {
+    try {
+      const res = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password: pass, portal }),
+      });
+      const data = await res.json();
+      if (!res.ok || data.error) {
+        return { success: false, error: data.error || "Login failed" };
+      }
+      setUser(data.user);
+      localStorage.setItem("khalid3d_user", JSON.stringify(data.user));
+      return { success: true };
+    } catch {
+      return { success: false, error: "Network error during authentication" };
+    }
   };
 
-  const user = DEMO_USERS[role];
-  const isStaffOrAdmin = role === "STAFF" || role === "ADMIN";
+  const register = async (name: string, email: string, pass: string, phone?: string) => {
+    try {
+      const res = await fetch("/api/auth/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, password: pass, phone }),
+      });
+      const data = await res.json();
+      if (!res.ok || data.error) {
+        return { success: false, error: data.error || "Registration failed" };
+      }
+      setUser(data.user);
+      localStorage.setItem("khalid3d_user", JSON.stringify(data.user));
+      return { success: true };
+    } catch {
+      return { success: false, error: "Network error during registration" };
+    }
+  };
+
+  const logout = async () => {
+    try {
+      await fetch("/api/auth/logout", { method: "POST" });
+    } catch {
+      // ignore
+    }
+    setUser(null);
+    localStorage.removeItem("khalid3d_user");
+  };
+
+  const isStaffOrAdmin = user?.role === "STAFF" || user?.role === "ADMIN";
 
   return (
-    <AuthContext.Provider value={{ user, role, switchRole, isStaffOrAdmin }}>
+    <AuthContext.Provider
+      value={{
+        user,
+        isLoading,
+        login,
+        register,
+        logout,
+        isStaffOrAdmin,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );

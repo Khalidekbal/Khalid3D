@@ -1,5 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 
+import { hashPassword } from "../src/lib/auth/password";
+
 const prisma = new PrismaClient();
 
 async function main() {
@@ -16,10 +18,15 @@ async function main() {
   await prisma.printerTechnology.deleteMany();
   await prisma.product.deleteMany();
 
+  const customerPass = hashPassword("Customer@123456");
+  const staffPass = hashPassword("Staff@123456");
+  const adminPass = hashPassword("Admin@123456");
+
   // 1. Create Users
   const customer = await prisma.user.create({
     data: {
       email: "customer@khalid3d.com",
+      passwordHash: customerPass,
       name: "Ahmed Hassan",
       role: "CUSTOMER",
       phone: "+20 100 123 4567",
@@ -39,7 +46,8 @@ async function main() {
 
   const staff = await prisma.user.create({
     data: {
-      email: "engineer@khalid3d.com",
+      email: "staff@khalid3d.com",
+      passwordHash: staffPass,
       name: "Khalid Ekbal (Master 3D Engineer)",
       role: "STAFF",
       phone: "+20 101 234 5678",
@@ -49,13 +57,14 @@ async function main() {
   const admin = await prisma.user.create({
     data: {
       email: "admin@khalid3d.com",
+      passwordHash: adminPass,
       name: "Khalid3D Operations Admin",
       role: "ADMIN",
       phone: "+20 102 345 6789",
     },
   });
 
-  console.log("✓ Seeded Users: Ahmed Hassan (Customer), Khalid Ekbal (Staff), Admin");
+  console.log("✓ Seeded Users: Ahmed Hassan (Customer), Khalid Ekbal (Staff: staff@khalid3d.com), Admin");
 
   // 2. Printer Technology: FDM Only
   const fdm = await prisma.printerTechnology.create({

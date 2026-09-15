@@ -3,6 +3,8 @@
 import React, { useState, useEffect } from "react";
 import { Star, CheckCircle2, MessageSquareQuote, ShieldCheck, ThumbsUp } from "lucide-react";
 
+import { useLanguage } from "@/context/LanguageContext";
+
 interface Review {
   id: string;
   customerName: string;
@@ -14,6 +16,7 @@ interface Review {
 }
 
 export default function ReviewsSection() {
+  const { t, isRtl } = useLanguage();
   const [reviews, setReviews] = useState<Review[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -42,11 +45,12 @@ export default function ReviewsSection() {
           <div>
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-200 text-xs font-mono font-bold text-blue-700">
               <Star className="w-3.5 h-3.5 fill-blue-600 text-blue-600" />
-              <span>Verified Customer Feedback</span>
+              <span>{t.reviews.badge}</span>
             </div>
             <h2 className="text-2xl sm:text-4xl font-black text-slate-900 mt-2 font-mono tracking-tight">
-              CLIENT REVIEWS & PRINT QUALITY
+              {t.reviews.title}
             </h2>
+            <p className="text-xs text-slate-500 mt-1">{t.reviews.subtitle}</p>
           </div>
           <div className="flex items-center gap-3">
             <div className="flex items-center gap-1">
@@ -54,8 +58,7 @@ export default function ReviewsSection() {
                 <Star key={s} className="w-5 h-5 text-amber-400 fill-amber-400" />
               ))}
             </div>
-            <span className="text-sm font-bold text-slate-800 font-mono">4.9 / 5.0 Rating</span>
-            <span className="text-xs text-slate-500 font-medium">(100+ Egyptian Engineers & Makers)</span>
+            <span className="text-sm font-bold text-slate-800 font-mono">4.9 / 5.0</span>
           </div>
         </div>
 

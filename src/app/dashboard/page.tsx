@@ -92,7 +92,7 @@ interface Review {
 }
 
 export default function StaffDashboardPage() {
-  const { user, role, switchRole, isStaffOrAdmin } = useAuth();
+  const { user, isStaffOrAdmin } = useAuth();
 
   const [activeTab, setActiveTab] = useState<"ORDERS" | "PRICING" | "REVIEWS" | "CATALOG">("ORDERS");
   const [orders, setOrders] = useState<Order[]>([]);
@@ -263,25 +263,23 @@ export default function StaffDashboardPage() {
 
   if (!isStaffOrAdmin) {
     return (
-      <div className="max-w-4xl mx-auto px-4 py-20 text-center space-y-4">
-        <ShieldAlert className="w-14 h-14 text-amber-500 mx-auto" />
-        <h2 className="text-2xl font-bold text-slate-900 font-mono">STAFF ACCESS RESTRICTED</h2>
-        <p className="text-sm text-slate-600 max-w-md mx-auto">
-          You are currently logged in as a <strong>CUSTOMER</strong>. Switch your actor role to <strong>STAFF</strong> or <strong>ADMIN</strong> to access Khalid3D CAM dispatch and pricing matrix controls.
-        </p>
-        <div className="pt-2 flex justify-center gap-3">
-          <button
-            onClick={() => switchRole("STAFF")}
-            className="px-5 py-2.5 rounded-xl text-xs font-bold bg-blue-600 hover:bg-blue-700 text-white transition-colors shadow-sm"
+      <div className="max-w-md mx-auto px-4 py-24 text-center space-y-6">
+        <div className="w-16 h-16 rounded-3xl bg-amber-50 border border-amber-200 text-amber-600 flex items-center justify-center mx-auto">
+          <ShieldAlert className="w-8 h-8" />
+        </div>
+        <div className="space-y-2">
+          <h2 className="text-2xl font-black text-slate-900 font-mono">STAFF ACCESS RESTRICTED</h2>
+          <p className="text-xs text-slate-600 leading-relaxed">
+            This workspace is restricted to authorized Khalid3D CAM engineers and technicians. Please log in with your staff email and password to adjust EGP pricing rates and manage orders.
+          </p>
+        </div>
+        <div className="pt-2 flex justify-center">
+          <Link
+            href="/login"
+            className="px-6 py-3 rounded-2xl text-xs font-bold bg-amber-600 hover:bg-amber-700 text-white transition-all shadow-md shadow-amber-500/20"
           >
-            Switch to Khalid Ekbal (STAFF)
-          </button>
-          <button
-            onClick={() => switchRole("ADMIN")}
-            className="px-5 py-2.5 rounded-xl text-xs font-bold bg-slate-900 hover:bg-slate-800 text-white transition-colors"
-          >
-            Switch to Admin (ADMIN)
-          </button>
+            Staff Sign In (Email & Password)
+          </Link>
         </div>
       </div>
     );
@@ -307,11 +305,11 @@ export default function StaffDashboardPage() {
               KHALID3D <span className="text-blue-600">STAFF OPS HUB</span>
             </h1>
             <span className="text-[11px] font-mono bg-blue-50 text-blue-700 border border-blue-200 px-2 py-0.5 rounded font-bold uppercase">
-              Actor: {role}
+              Role: {user?.role || "STAFF"}
             </span>
           </div>
           <p className="text-sm text-slate-600 mt-1">
-            Logged in as {user.name}. CAM dispatch, EGP pricing configuration (Grams & Minutes), and review moderation.
+            Logged in as {user?.name || "Khalid Ekbal"}. CAM dispatch, EGP pricing configuration (Grams & Minutes), and review moderation.
           </p>
         </div>
 
