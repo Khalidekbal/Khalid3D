@@ -65,11 +65,11 @@ export default function Navbar() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="relative px-4 py-2 rounded-xl text-sm font-bold text-white bg-red-600 hover:bg-red-700 flex items-center gap-2 shadow-sm shadow-red-500/20 transition-all hover:shadow-md hover:shadow-red-500/30 mx-1"
+                  className="relative px-5 py-2.5 rounded-full text-xs font-bold text-slate-950 bg-[#72bf25] hover:bg-[#62a61e] flex items-center gap-2 shadow-md shadow-[#72bf25]/30 transition-all hover:scale-105 mx-1 uppercase tracking-wide"
                 >
-                  <Icon className="w-4 h-4" />
+                  <Icon className="w-3.5 h-3.5" />
                   <span>{link.label}</span>
-                  <span className="w-2 h-2 rounded-full bg-red-200 animate-ping absolute -top-0.5 -right-0.5" />
+                  <span className="w-2 h-2 rounded-full bg-emerald-100 animate-ping absolute -top-0.5 -right-0.5" />
                 </Link>
               );
             }
@@ -78,19 +78,19 @@ export default function Navbar() {
               <Link
                 key={link.href}
                 href={link.href}
-                className={`px-3.5 py-2 rounded-xl text-sm font-medium flex items-center gap-2 transition-colors ${
+                className={`px-3.5 py-2 rounded-full text-xs font-semibold flex items-center gap-2 transition-colors ${
                   isActive
-                    ? "text-red-600 bg-red-50/80 font-semibold"
+                    ? "text-[#4d8616] bg-emerald-50 font-bold"
                     : "text-slate-600 hover:text-slate-900 hover:bg-slate-100"
                 }`}
               >
                 <Icon
-                  className={`w-4 h-4 ${
+                  className={`w-3.5 h-3.5 ${
                     link.staffOnly
                       ? "text-amber-600"
                       : link.label === t.reviews.badge
                       ? "text-amber-500 fill-amber-500"
-                      : "text-slate-500"
+                      : "text-slate-400"
                   }`}
                 />
                 <span>{link.label}</span>
