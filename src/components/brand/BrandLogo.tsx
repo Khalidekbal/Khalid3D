@@ -27,25 +27,25 @@ export default function BrandLogo({
 
   return (
     <div className={`flex items-center gap-3 select-none group ${className}`}>
-      {/* Hexagonal Logo Container with Dynamic Motion */}
+      {/* Logo Container with Dynamic Ambient Glow */}
       <div className="relative flex items-center justify-center">
         {/* Dynamic Glowing Ambient Aura */}
         {withMotion && (
-          <div className="absolute inset-0 rounded-2xl bg-emerald-500/20 blur-md group-hover:bg-emerald-500/35 transition-all duration-500 scale-95 group-hover:scale-110" />
+          <div className="absolute inset-0 rounded-2xl bg-[#00dbc6]/25 blur-md group-hover:bg-[#00dbc6]/40 transition-all duration-500 scale-95 group-hover:scale-110" />
         )}
 
-        {/* Dynamic Hexagon/Card Wrapper with subtle float & tilt */}
+        {/* Dynamic Card Wrapper with subtle float & tilt */}
         <div
-          className={`relative rounded-xl bg-white border border-emerald-100 shadow-md shadow-emerald-500/10 overflow-hidden flex items-center justify-center p-1 transition-all duration-300 ${
+          className={`relative rounded-xl bg-white border border-[#d4e3e1] shadow-xs overflow-hidden flex items-center justify-center p-1 transition-all duration-300 ${
             withMotion
-              ? "group-hover:-translate-y-1 group-hover:rotate-1 group-hover:shadow-lg group-hover:shadow-emerald-500/20"
+              ? "group-hover:-translate-y-1 group-hover:shadow-md group-hover:border-[#009e8f]"
               : ""
           }`}
           style={{ width: currentSize.img + 8, height: currentSize.img + 8 }}
         >
-          {/* Subtle animated nozzle scanline beam */}
+          {/* Subtle animated scanline shimmer */}
           {withMotion && (
-            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-emerald-400/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 animate-pulse pointer-events-none" />
+            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#00dbc6]/15 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
           )}
 
           <img
@@ -61,18 +61,18 @@ export default function BrandLogo({
         <div className="flex flex-col">
           <div className="flex items-center gap-1.5">
             <span
-              className={`font-black tracking-tight text-slate-900 font-mono ${currentSize.text}`}
+              className={`font-black tracking-tight text-[#0e2628] font-sans ${currentSize.text}`}
             >
-              Khalid<span className="text-[#5fae20]">3D</span>
+              Khalid<span className="text-[#009e8f]">3D</span>
             </span>
-            <span className="text-[10px] font-mono uppercase px-1.5 py-0.5 bg-emerald-50 text-emerald-800 font-bold border border-emerald-200 rounded">
-              EGYPT
+            <span className="text-[10px] font-mono uppercase px-1.5 py-0.5 bg-[#d8faf5] text-[#007065] font-bold border border-[#a8ede4] rounded-md tracking-wider">
+              LAB
             </span>
           </div>
           <span
-            className={`text-slate-500 font-medium font-sans tracking-wide -mt-0.5 ${currentSize.sub}`}
+            className={`text-[#53696b] font-medium font-sans tracking-wide -mt-0.5 ${currentSize.sub}`}
           >
-            FDM 3D Printing Lab
+            FDM 3D Manufacturing
           </span>
         </div>
       )}
