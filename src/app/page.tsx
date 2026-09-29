@@ -7,6 +7,7 @@ import { useLanguage } from "@/context/LanguageContext";
 import BrandLogo from "@/components/brand/BrandLogo";
 import ReviewsSection from "@/components/home/ReviewsSection";
 import ThreeViewer from "@/components/viewer/ThreeViewer";
+import JLC3DPMaterialShowcase from "@/components/home/JLC3DPMaterialShowcase";
 import {
   UploadCloud,
   Layers,
@@ -481,138 +482,11 @@ export default function HomePage() {
       </section>
 
       {/* ========================================================= */}
-      {/* 3. MATERIAL SELECTION RAIL (Threads3D Style) */}
+      {/* 3. JLC3DP-STYLE 3D PRINTING ON DEMAND MATERIAL SHOWCASE   */}
       {/* ========================================================= */}
       <section id="materials" className="py-20 sm:py-28 bg-[#f4faf9] relative border-b border-[#d4e3e1]/60">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          
-          <div className="text-center max-w-2xl mx-auto mb-12 space-y-3">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#d8faf5] border border-[#a8ede4] text-xs font-mono font-semibold text-[#007065]">
-              <Box className="w-3.5 h-3.5 text-[#009e8f]" />
-              <span>{isRtl ? "خيارات الخامات المتاحة" : "POLYMER SELECTOR RAIL"}</span>
-            </div>
-            <h2 className="text-3xl sm:text-4xl font-black text-[#0e2628] tracking-tight">
-              {isRtl ? "اختر الخامة المناسبة لتطبيقك الهندسي" : "Engineered for Specific Environments"}
-            </h2>
-            <p className="text-sm sm:text-base text-[#53696b]">
-              {isRtl
-                ? "نوفر فقط الخامات الصناعية الثلاث الأساسية التي تغطي 98% من التطبيقات الميكانيكية والهندسية بدقة متناهية."
-                : "We focus exclusively on the three essential FDM polymers to guarantee uncompromised quality and optimal print profiles."}
-            </p>
-          </div>
-
-          {/* Interactive Material Pill Switcher */}
-          <div className="flex justify-center mb-10">
-            <div className="inline-flex p-1.5 rounded-full bg-white border border-[#d4e3e1] shadow-2xs gap-1.5">
-              {(["PLA", "PETG", "TPU"] as const).map((mat) => {
-                const isSelected = activeMaterial === mat;
-                return (
-                  <button
-                    key={mat}
-                    onClick={() => setActiveMaterial(mat)}
-                    className={`px-6 py-2.5 rounded-full text-xs font-bold transition-all ${
-                      isSelected
-                        ? "bg-[#00dbc6] text-[#0e2628] shadow-xs scale-102"
-                        : "text-[#53696b] hover:text-[#0e2628] hover:bg-[#eef7f6]"
-                    }`}
-                  >
-                    {materialSpecs[mat].name}
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-
-          {/* Active Material Detailed Feature Card */}
-          <div className="max-w-4xl mx-auto bg-white rounded-3xl border border-[#d4e3e1] p-6 sm:p-10 shadow-sm">
-            <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
-              
-              {/* Left Column: Properties & Overview */}
-              <div className="md:col-span-7 space-y-4">
-                <div className="inline-block px-3 py-1 rounded-full text-xs font-bold bg-[#d8faf5] text-[#007065] border border-[#a8ede4]">
-                  {materialSpecs[activeMaterial].badge}
-                </div>
-                <h3 className="text-2xl font-black text-[#0e2628]">
-                  {materialSpecs[activeMaterial].name}
-                </h3>
-                <p className="text-sm text-[#53696b] leading-relaxed">
-                  {materialSpecs[activeMaterial].description}
-                </p>
-
-                {/* Technical Metric Badges */}
-                <div className="grid grid-cols-3 gap-3 pt-2">
-                  <div className="p-3 rounded-xl bg-[#f4faf9] border border-[#d4e3e1] text-center">
-                    <div className="text-[10px] font-mono uppercase text-[#81989a]">Tensile Yield</div>
-                    <div className="text-sm font-bold text-[#0e2628]">{materialSpecs[activeMaterial].tensile}</div>
-                  </div>
-                  <div className="p-3 rounded-xl bg-[#f4faf9] border border-[#d4e3e1] text-center">
-                    <div className="text-[10px] font-mono uppercase text-[#81989a]">Heat Deflection</div>
-                    <div className="text-sm font-bold text-[#0e2628]">{materialSpecs[activeMaterial].temp}</div>
-                  </div>
-                  <div className="p-3 rounded-xl bg-[#f4faf9] border border-[#d4e3e1] text-center">
-                    <div className="text-[10px] font-mono uppercase text-[#81989a]">Tolerance</div>
-                    <div className="text-sm font-bold text-[#009e8f]">{materialSpecs[activeMaterial].tolerance}</div>
-                  </div>
-                </div>
-
-                {/* Practical Recommended Applications */}
-                <div className="space-y-2 pt-2">
-                  <span className="text-xs font-bold text-[#0e2628] block">
-                    {isRtl ? "التطبيقات الموصى بها:" : "Recommended Engineering Applications:"}
-                  </span>
-                  <div className="flex flex-wrap gap-2">
-                    {materialSpecs[activeMaterial].applications.map((app, i) => (
-                      <span
-                        key={i}
-                        className="px-3 py-1 rounded-lg text-xs bg-[#eef7f6] text-[#243a3c] border border-[#d4e3e1] flex items-center gap-1.5"
-                      >
-                        <Check className="w-3 h-3 text-[#009e8f]" />
-                        <span>{app}</span>
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </div>
-
-              {/* Right Column: Pricing Transparency Card */}
-              <div className="md:col-span-5 bg-[#fafefd] border border-[#d4e3e1] rounded-2xl p-6 text-center space-y-4">
-                <div className="text-xs font-mono uppercase font-bold text-[#81989a]">
-                  {isRtl ? "تسعيرة الخامة المباشرة" : "Transparent Rate Card"}
-                </div>
-                
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between text-xs py-1.5 border-b border-[#d4e3e1]">
-                    <span className="text-[#53696b]">{isRtl ? "سعر الجرام:" : "Per Gram:"}</span>
-                    <span className="font-mono font-bold text-[#0e2628]">
-                      {materialSpecs[activeMaterial].gramRate.toFixed(2)} EGP
-                    </span>
-                  </div>
-                  <div className="flex items-center justify-between text-xs py-1.5 border-b border-[#d4e3e1]">
-                    <span className="text-[#53696b]">{isRtl ? "سعر دقيقة الطباعة:" : "Per Machine Min:"}</span>
-                    <span className="font-mono font-bold text-[#0e2628]">
-                      {materialSpecs[activeMaterial].minRate.toFixed(2)} EGP
-                    </span>
-                  </div>
-                  <div className="flex items-center justify-between text-xs py-1.5">
-                    <span className="text-[#53696b]">{isRtl ? "رسوم تجهيز الماكينة:" : "Setup & Calibration:"}</span>
-                    <span className="font-mono font-bold text-[#0e2628]">
-                      {materialSpecs[activeMaterial].setup} EGP
-                    </span>
-                  </div>
-                </div>
-
-                <Link
-                  href="/quote"
-                  className="w-full py-3 rounded-full text-xs font-bold text-[#0e2628] bg-[#00dbc6] hover:bg-[#00c5b2] shadow-xs flex items-center justify-center gap-2 transition-all"
-                >
-                  <UploadCloud className="w-3.5 h-3.5" />
-                  <span>{isRtl ? `طلب تسعير بخامة ${activeMaterial}` : `Quote with ${activeMaterial}`}</span>
-                </Link>
-              </div>
-
-            </div>
-          </div>
-
+          <JLC3DPMaterialShowcase />
         </div>
       </section>
 
