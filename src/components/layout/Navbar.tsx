@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
@@ -11,6 +11,7 @@ import {
   ShoppingBag,
   ClipboardList,
   ShieldAlert,
+  ShieldCheck,
   ChevronDown,
   Menu,
   X,
@@ -21,6 +22,13 @@ import {
   LogIn,
   UserPlus,
   Sparkles,
+  Search,
+  ShoppingCart,
+  Layers,
+  HelpCircle,
+  FileText,
+  Info,
+  Box,
 } from "lucide-react";
 
 export default function Navbar() {
@@ -28,20 +36,36 @@ export default function Navbar() {
   const router = useRouter();
   const { user, logout, isStaffOrAdmin } = useAuth();
   const { language, setLanguage, t, isRtl } = useLanguage();
+  
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [materialsMenuOpen, setMaterialsMenuOpen] = useState(false);
+  const [supportMenuOpen, setSupportMenuOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
 
-  const navLinks = [
-    { href: "/quote", label: t.nav.instantQuote, icon: UploadCloud, highlight: true },
-    { href: "/#overview", label: isRtl ? "نظرة عامة" : "Overview" },
-    { href: "/#materials", label: isRtl ? "الخامات الهندسية" : "Materials" },
-    { href: "/#reviews", label: t.reviews.badge, icon: Star },
-    { href: "/catalog", label: t.nav.store, icon: ShoppingBag },
-    { href: "/orders", label: t.nav.trackOrder, icon: ClipboardList },
-    ...(isStaffOrAdmin
-      ? [{ href: "/dashboard", label: t.nav.staffPortal, icon: ShieldAlert, staffOnly: true }]
-      : []),
-  ];
+  const materialsDropdownRef = useRef<HTMLDivElement>(null);
+  const supportDropdownRef = useRef<HTMLDivElement>(null);
+
+  // Close dropdowns on outside click
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (
+        materialsDropdownRef.current &&
+        !materialsDropdownRef.current.contains(event.target as Node)
+      ) {
+        setMaterialsMenuOpen(false);
+      }
+      if (
+        supportDropdownRef.current &&
+        !supportDropdownRef.current.contains(event.target as Node)
+      ) {
+        setSupportMenuOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   const handleSignOut = async () => {
     await logout();
@@ -49,104 +73,281 @@ export default function Navbar() {
     router.push("/");
   };
 
+  const handleSearchSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      router.push(`/catalog?search=${encodeURIComponent(searchQuery.trim())}`);
+      setSearchOpen(false);
+    }
+  };
+
   return (
-    <header className="sticky top-0 z-50 w-full bg-[#fafefd]/90 backdrop-blur-md border-b border-[#d4e3e1] transition-all">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-18 flex items-center justify-between">
-        {/* Khalid3D Brand Logo */}
-        <Link href="/" className="flex items-center">
-          <BrandLogo size="md" withMotion={true} />
-        </Link>
+    <header className="sticky top-0 z-50 w-full bg-white/95 backdrop-blur-md border-b border-[#e5e7eb] shadow-2xs transition-all">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-18 flex items-center justify-between gap-4">
+        
+        {/* Left: JLC3DP-style Brand Logo */}
+        <div className="flex items-center gap-8 shrink-0">
+          <Link href="/" className="flex items-center">
+            <BrandLogo size="md" withMotion={true} />
+          </Link>
 
-        {/* Desktop Navigation Links */}
-        <nav className="hidden md:flex items-center gap-1.5">
-          {navLinks.map((link) => {
-            const Icon = link.icon;
-            const isActive = pathname === link.href;
+          {/* Desktop Navigation Links matching JLC3DP Upper Bar */}
+          <nav className="hidden lg:flex items-center gap-6 text-sm font-medium text-[#1e293b]">
+            {/* Products (with grid icon) */}
+            <Link
+              href="/catalog"
+              className="flex items-center gap-1.5 hover:text-[#0066cc] transition-colors"
+            >
+              <span className="font-mono text-xs opacity-70">::</span>
+              <span>{isRtl ? "المنتجات" : "Products"}</span>
+            </Link>
 
-            if (link.highlight) {
-              return (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className="relative px-5 py-2.5 rounded-full text-xs font-bold text-[#0e2628] bg-[#00dbc6] hover:bg-[#00c5b2] flex items-center gap-2 shadow-xs hover:shadow-md hover:shadow-[#00dbc6]/20 transition-all hover:scale-102 mx-1.5 tracking-wide"
-                >
-                  <UploadCloud className="w-3.5 h-3.5" />
-                  <span>{link.label}</span>
-                  <span className="w-2 h-2 rounded-full bg-[#0e2628] animate-ping absolute -top-0.5 -right-0.5" />
-                </Link>
-              );
-            }
-
-            return (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={`px-3.5 py-2 rounded-full text-xs font-medium flex items-center gap-2 transition-all ${
-                  isActive
-                    ? "text-[#007065] bg-[#d8faf5] font-bold"
-                    : "text-[#53696b] hover:text-[#0e2628] hover:bg-[#eef7f6]"
+            {/* Materials Dropdown */}
+            <div className="relative" ref={materialsDropdownRef}>
+              <button
+                onClick={() => {
+                  setMaterialsMenuOpen(!materialsMenuOpen);
+                  setSupportMenuOpen(false);
+                }}
+                className={`flex items-center gap-1 hover:text-[#0066cc] transition-colors cursor-pointer py-1 ${
+                  materialsMenuOpen ? "text-[#0066cc] font-semibold" : ""
                 }`}
               >
-                {Icon && (
-                  <Icon
-                    className={`w-3.5 h-3.5 ${
-                      link.staffOnly
-                        ? "text-amber-600"
-                        : link.label === t.reviews.badge
-                        ? "text-amber-500 fill-amber-500"
-                        : "text-[#81989a]"
-                    }`}
-                  />
-                )}
-                <span>{link.label}</span>
-              </Link>
-            );
-          })}
-        </nav>
+                <span>{isRtl ? "الخامات الهندسية" : "Materials"}</span>
+                <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${materialsMenuOpen ? "rotate-180" : ""}`} />
+              </button>
 
-        {/* Right Controls: Language Switcher & Authentication */}
-        <div className="hidden sm:flex items-center gap-2.5">
-          {/* Language Toggle Button */}
+              {materialsMenuOpen && (
+                <div
+                  className={`absolute top-full mt-2 w-72 bg-white rounded-2xl border border-[#e2e8f0] shadow-xl p-3 z-50 animate-in fade-in-50 zoom-in-95 duration-150 ${
+                    isRtl ? "right-0" : "left-0"
+                  }`}
+                >
+                  <div className="text-[10px] font-mono uppercase font-bold text-[#94a3b8] px-3 py-1.5 border-b border-[#f1f5f9]">
+                    {isRtl ? "خامات الطباعة ثلاثية الأبعاد (FDM)" : "FDM 3D Polymers"}
+                  </div>
+                  
+                  <Link
+                    href="/#materials"
+                    onClick={() => setMaterialsMenuOpen(false)}
+                    className="flex items-start gap-3 p-2.5 rounded-xl hover:bg-[#f8fafc] transition-colors group mt-1"
+                  >
+                    <div className="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-700 flex items-center justify-center shrink-0 border border-emerald-200">
+                      <Layers className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <div className="text-xs font-bold text-[#0f172a] group-hover:text-[#0066cc]">
+                        PLA Tough Industrial
+                      </div>
+                      <div className="text-[11px] text-[#64748b]">
+                        {isRtl ? "صلابة ودقة عالية للأبعاد" : "High rigidity & crisp aesthetics"}
+                      </div>
+                    </div>
+                  </Link>
+
+                  <Link
+                    href="/#materials"
+                    onClick={() => setMaterialsMenuOpen(false)}
+                    className="flex items-start gap-3 p-2.5 rounded-xl hover:bg-[#f8fafc] transition-colors group"
+                  >
+                    <div className="w-8 h-8 rounded-lg bg-teal-50 text-teal-700 flex items-center justify-center shrink-0 border border-teal-200">
+                      <ShieldCheck className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <div className="text-xs font-bold text-[#0f172a] group-hover:text-[#0066cc]">
+                        PETG Industrial Grade
+                      </div>
+                      <div className="text-[11px] text-[#64748b]">
+                        {isRtl ? "مقاوم للصدمات والحرارة 78°C" : "Chemical & heat resistant (78°C)"}
+                      </div>
+                    </div>
+                  </Link>
+
+                  <Link
+                    href="/#materials"
+                    onClick={() => setMaterialsMenuOpen(false)}
+                    className="flex items-start gap-3 p-2.5 rounded-xl hover:bg-[#f8fafc] transition-colors group"
+                  >
+                    <div className="w-8 h-8 rounded-lg bg-orange-50 text-orange-700 flex items-center justify-center shrink-0 border border-orange-200">
+                      <Box className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <div className="text-xs font-bold text-[#0f172a] group-hover:text-[#0066cc]">
+                        TPU 95A Flexible
+                      </div>
+                      <div className="text-[11px] text-[#64748b]">
+                        {isRtl ? "مرونة مطاطية وامتصاص اهتزاز" : "Rubber-like elastomeric dampening"}
+                      </div>
+                    </div>
+                  </Link>
+                </div>
+              )}
+            </div>
+
+            {/* Free 3D Models */}
+            <Link
+              href="/catalog"
+              className="hover:text-[#0066cc] transition-colors flex items-center gap-1.5"
+            >
+              <span>{isRtl ? "نماذج 3D مجانية" : "Free 3D Models"}</span>
+              <span className="text-[9px] font-mono uppercase bg-blue-50 text-[#0066cc] px-1.5 py-0.5 rounded font-bold">
+                CAD
+              </span>
+            </Link>
+
+            {/* Support Dropdown */}
+            <div className="relative" ref={supportDropdownRef}>
+              <button
+                onClick={() => {
+                  setSupportMenuOpen(!supportMenuOpen);
+                  setMaterialsMenuOpen(false);
+                }}
+                className={`flex items-center gap-1 hover:text-[#0066cc] transition-colors cursor-pointer py-1 ${
+                  supportMenuOpen ? "text-[#0066cc] font-semibold" : ""
+                }`}
+              >
+                <span>{isRtl ? "الدعم والمساعدة" : "Support"}</span>
+                <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${supportMenuOpen ? "rotate-180" : ""}`} />
+              </button>
+
+              {supportMenuOpen && (
+                <div
+                  className={`absolute top-full mt-2 w-56 bg-white rounded-2xl border border-[#e2e8f0] shadow-xl p-2 z-50 animate-in fade-in-50 zoom-in-95 duration-150 ${
+                    isRtl ? "right-0" : "left-0"
+                  }`}
+                >
+                  <Link
+                    href="/#reviews"
+                    onClick={() => setSupportMenuOpen(false)}
+                    className="flex items-center gap-2.5 px-3 py-2 rounded-xl hover:bg-[#f8fafc] text-xs font-semibold text-[#1e293b] hover:text-[#0066cc] transition-colors"
+                  >
+                    <Star className="w-4 h-4 text-amber-500 fill-amber-500" />
+                    <span>{t.reviews.badge}</span>
+                  </Link>
+                  <Link
+                    href="/orders"
+                    onClick={() => setSupportMenuOpen(false)}
+                    className="flex items-center gap-2.5 px-3 py-2 rounded-xl hover:bg-[#f8fafc] text-xs font-semibold text-[#1e293b] hover:text-[#0066cc] transition-colors"
+                  >
+                    <ClipboardList className="w-4 h-4 text-[#64748b]" />
+                    <span>{t.nav.trackOrder}</span>
+                  </Link>
+                  <a
+                    href="#faq"
+                    onClick={() => setSupportMenuOpen(false)}
+                    className="flex items-center gap-2.5 px-3 py-2 rounded-xl hover:bg-[#f8fafc] text-xs font-semibold text-[#1e293b] hover:text-[#0066cc] transition-colors"
+                  >
+                    <HelpCircle className="w-4 h-4 text-[#64748b]" />
+                    <span>{isRtl ? "الأسئلة الشائعة" : "FAQs & DFM Guide"}</span>
+                  </a>
+                </div>
+              )}
+            </div>
+
+            {/* About Us */}
+            <a
+              href="#overview"
+              className="hover:text-[#0066cc] transition-colors"
+            >
+              {isRtl ? "من نحن" : "About Us"}
+            </a>
+          </nav>
+        </div>
+
+        {/* Right: Search, Cart, Language, Order Now & Sign In */}
+        <div className="flex items-center gap-3">
+          
+          {/* Search Trigger */}
+          <div className="relative">
+            <button
+              onClick={() => setSearchOpen(!searchOpen)}
+              className="p-2 rounded-full hover:bg-slate-100 text-slate-600 hover:text-slate-900 transition-colors"
+              title="Search 3D Models & Products"
+            >
+              <Search className="w-4 h-4" />
+            </button>
+
+            {searchOpen && (
+              <form
+                onSubmit={handleSearchSubmit}
+                className={`absolute top-full mt-2 w-72 bg-white rounded-2xl border border-slate-200 shadow-xl p-2 z-50 flex items-center gap-2 ${
+                  isRtl ? "left-0" : "right-0"
+                }`}
+              >
+                <input
+                  type="text"
+                  placeholder={isRtl ? "ابحث عن مجسم أو قطعة..." : "Search parts, models..."}
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full text-xs px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:outline-hidden focus:border-[#0066cc]"
+                  autoFocus
+                />
+                <button
+                  type="submit"
+                  className="px-3 py-2 bg-[#0066cc] text-white rounded-xl text-xs font-bold shrink-0 hover:bg-[#0052a3]"
+                >
+                  {isRtl ? "بحث" : "Go"}
+                </button>
+              </form>
+            )}
+          </div>
+
+          {/* Cart / Orders Icon */}
+          <Link
+            href="/orders"
+            className="p-2 rounded-full hover:bg-slate-100 text-slate-600 hover:text-slate-900 transition-colors relative"
+            title="Track Orders / Cart"
+          >
+            <ShoppingCart className="w-4 h-4" />
+            <span className="w-2 h-2 rounded-full bg-[#0066cc] absolute top-1 right-1" />
+          </Link>
+
+          {/* Language Toggle */}
           <button
             onClick={() => setLanguage(language === "en" ? "ar" : "en")}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-[#d4e3e1] bg-[#f2faf9] hover:bg-[#eef7f6] text-xs font-semibold text-[#243a3c] transition-colors"
+            className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-slate-200 bg-slate-50 hover:bg-slate-100 text-xs font-semibold text-slate-700 transition-colors"
             title="Change language / تغيير اللغة"
           >
-            <Languages className="w-3.5 h-3.5 text-[#009e8f]" />
+            <Languages className="w-3.5 h-3.5 text-[#0066cc]" />
             <span className="font-sans">{language === "en" ? "العربية" : "English"}</span>
           </button>
 
-          {/* User Logged In vs Logged Out */}
+          {/* JLC3DP "Order Now" Outlined Pill Button */}
+          <Link
+            href="/quote"
+            className="hidden sm:inline-flex items-center justify-center px-4 py-2 rounded-full text-xs font-bold text-[#0066cc] hover:text-[#0052a3] bg-white border border-[#0066cc] hover:bg-blue-50/60 shadow-2xs transition-all hover:scale-102"
+          >
+            <span>{isRtl ? "اطلب الآن" : "Order Now"}</span>
+          </Link>
+
+          {/* JLC3DP Solid Blue "Sign In" / User Avatar Button */}
           {user ? (
             <div className="relative">
               <button
                 onClick={() => setUserMenuOpen(!userMenuOpen)}
-                className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#f2faf9] border border-[#d4e3e1] hover:border-[#009e8f] text-xs font-semibold text-[#0e2628] transition-colors"
+                className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-100 border border-slate-200 hover:border-[#0066cc] text-xs font-semibold text-slate-900 transition-colors cursor-pointer"
               >
-                <div className="w-6 h-6 rounded-full bg-[#00dbc6] text-[#0e2628] flex items-center justify-center text-[10px] font-bold">
+                <div className="w-6 h-6 rounded-full bg-[#0066cc] text-white flex items-center justify-center text-[10px] font-bold">
                   {user.name.charAt(0).toUpperCase()}
                 </div>
-                <div className="text-left hidden lg:block max-w-[120px] truncate">
-                  <div className="font-bold text-xs leading-tight truncate">{user.name}</div>
-                  <div className="text-[10px] text-[#53696b] uppercase">{user.role}</div>
-                </div>
-                <ChevronDown className="w-3 h-3 text-[#81989a]" />
+                <span className="hidden md:inline max-w-[100px] truncate">{user.name}</span>
+                <ChevronDown className="w-3 h-3 text-slate-400" />
               </button>
 
               {userMenuOpen && (
                 <div
-                  className={`absolute mt-2 w-56 bg-white border border-[#d4e3e1] rounded-2xl shadow-xl py-2 z-50 ${
+                  className={`absolute mt-2 w-56 bg-white border border-slate-200 rounded-2xl shadow-xl py-2 z-50 ${
                     isRtl ? "left-0" : "right-0"
                   }`}
                 >
-                  <div className="px-4 py-2 border-b border-[#eef7f6]">
-                    <p className="text-xs font-bold text-[#0e2628] truncate">{user.name}</p>
-                    <p className="text-[11px] text-[#53696b] truncate">{user.email}</p>
+                  <div className="px-4 py-2 border-b border-slate-100">
+                    <p className="text-xs font-bold text-slate-900 truncate">{user.name}</p>
+                    <p className="text-[11px] text-slate-500 truncate">{user.email}</p>
                     <span
                       className={`inline-block mt-1 text-[10px] font-mono font-bold px-2 py-0.5 rounded-full ${
                         user.role === "STAFF" || user.role === "ADMIN"
                           ? "bg-amber-100 text-amber-900"
-                          : "bg-[#d8faf5] text-[#007065]"
+                          : "bg-blue-100 text-[#0066cc]"
                       }`}
                     >
                       {user.role === "STAFF" || user.role === "ADMIN" ? "Staff Member" : "Customer"}
@@ -156,9 +357,9 @@ export default function Navbar() {
                   <Link
                     href="/orders"
                     onClick={() => setUserMenuOpen(false)}
-                    className="flex items-center gap-2 px-4 py-2 text-xs text-[#243a3c] hover:bg-[#eef7f6] transition-colors"
+                    className="flex items-center gap-2 px-4 py-2 text-xs text-slate-700 hover:bg-slate-50 transition-colors"
                   >
-                    <ClipboardList className="w-3.5 h-3.5 text-[#81989a]" />
+                    <ClipboardList className="w-3.5 h-3.5 text-slate-400" />
                     <span>{t.orders.title}</span>
                   </Link>
 
@@ -173,10 +374,10 @@ export default function Navbar() {
                     </Link>
                   )}
 
-                  <div className="pt-1 border-t border-[#eef7f6] mt-1">
+                  <div className="pt-1 border-t border-slate-100 mt-1">
                     <button
                       onClick={handleSignOut}
-                      className="w-full flex items-center gap-2 px-4 py-2 text-xs text-rose-600 hover:bg-rose-50 transition-colors text-left"
+                      className="w-full flex items-center gap-2 px-4 py-2 text-xs text-rose-600 hover:bg-rose-50 transition-colors text-left cursor-pointer"
                     >
                       <LogOut className="w-3.5 h-3.5" />
                       <span>{t.nav.signOut}</span>
@@ -186,36 +387,19 @@ export default function Navbar() {
               )}
             </div>
           ) : (
-            <div className="flex items-center gap-2">
-              <Link
-                href="/login"
-                className="px-3.5 py-1.5 rounded-full text-xs font-semibold text-[#53696b] hover:text-[#0e2628] hover:bg-[#eef7f6] transition-colors flex items-center gap-1.5"
-              >
-                <LogIn className="w-3.5 h-3.5" />
-                <span>{t.nav.signIn}</span>
-              </Link>
-              <Link
-                href="/register"
-                className="px-4 py-1.5 rounded-full text-xs font-bold text-white bg-[#0e2628] hover:bg-[#1a383b] transition-all shadow-xs flex items-center gap-1.5"
-              >
-                <UserPlus className="w-3.5 h-3.5 text-[#00dbc6]" />
-                <span>{t.nav.register}</span>
-              </Link>
-            </div>
+            <Link
+              href="/login"
+              className="px-4 py-2 rounded-full text-xs font-bold text-white bg-[#0066cc] hover:bg-[#0052a3] shadow-xs transition-all hover:scale-102 flex items-center gap-1.5"
+            >
+              <LogIn className="w-3.5 h-3.5" />
+              <span>{isRtl ? "تسجيل الدخول" : "Sign In"}</span>
+            </Link>
           )}
-        </div>
 
-        {/* Mobile menu toggle */}
-        <div className="flex items-center gap-2 md:hidden">
-          <button
-            onClick={() => setLanguage(language === "en" ? "ar" : "en")}
-            className="p-1.5 text-xs font-bold rounded-lg border border-[#d4e3e1] text-[#0e2628]"
-          >
-            {language === "en" ? "عربي" : "EN"}
-          </button>
+          {/* Mobile menu toggle */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="p-2 text-[#0e2628] hover:text-[#009e8f]"
+            className="p-2 text-slate-700 hover:text-[#0066cc] lg:hidden"
           >
             {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
@@ -224,53 +408,58 @@ export default function Navbar() {
 
       {/* Mobile Menu Dropdown */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-t border-[#d4e3e1] bg-[#fafefd] px-4 py-4 space-y-3 shadow-lg">
-          {navLinks.map((link) => {
-            const Icon = link.icon;
-            return (
-              <Link
-                key={link.href}
-                href={link.href}
-                onClick={() => setMobileMenuOpen(false)}
-                className="flex items-center gap-3 px-3 py-2 rounded-xl text-sm font-semibold text-[#243a3c] hover:bg-[#eef7f6]"
-              >
-                {Icon && <Icon className="w-4 h-4 text-[#009e8f]" />}
-                <span>{link.label}</span>
-              </Link>
-            );
-          })}
+        <div className="lg:hidden border-t border-slate-200 bg-white px-4 py-4 space-y-3 shadow-lg">
+          <Link
+            href="/quote"
+            onClick={() => setMobileMenuOpen(false)}
+            className="flex items-center justify-center w-full py-3 rounded-xl text-sm font-bold text-white bg-[#0066cc] text-center"
+          >
+            {isRtl ? "اطلب تسعيرك الآن" : "Order Now (Instant Quote)"}
+          </Link>
 
-          <div className="pt-3 border-t border-[#d4e3e1] flex flex-col gap-2">
-            {user ? (
-              <div className="space-y-2">
-                <div className="text-xs text-[#53696b] font-medium px-2">
-                  Signed in as <span className="font-bold text-[#0e2628]">{user.name}</span> ({user.role})
-                </div>
-                <button
-                  onClick={handleSignOut}
-                  className="w-full flex items-center gap-2 px-3 py-2 rounded-xl text-sm font-bold text-rose-600 bg-rose-50"
-                >
-                  <LogOut className="w-4 h-4" />
-                  <span>{t.nav.signOut}</span>
-                </button>
-              </div>
-            ) : (
-              <div className="grid grid-cols-2 gap-2">
-                <Link
-                  href="/login"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="text-center py-2 rounded-full text-xs font-bold border border-[#d4e3e1] text-[#0e2628] bg-white"
-                >
-                  {t.nav.signIn}
-                </Link>
-                <Link
-                  href="/register"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="text-center py-2 rounded-full text-xs font-bold bg-[#0e2628] text-white"
-                >
-                  {t.nav.register}
-                </Link>
-              </div>
+          <Link
+            href="/catalog"
+            onClick={() => setMobileMenuOpen(false)}
+            className="flex items-center gap-3 px-3 py-2 rounded-xl text-sm font-semibold text-slate-700 hover:bg-slate-50"
+          >
+            <ShoppingBag className="w-4 h-4 text-[#0066cc]" />
+            <span>{isRtl ? "المنتجات والنماذج المجانية" : "Products & Free 3D Models"}</span>
+          </Link>
+
+          <Link
+            href="/#materials"
+            onClick={() => setMobileMenuOpen(false)}
+            className="flex items-center gap-3 px-3 py-2 rounded-xl text-sm font-semibold text-slate-700 hover:bg-slate-50"
+          >
+            <Layers className="w-4 h-4 text-[#0066cc]" />
+            <span>{isRtl ? "الخامات الهندسية (PLA • PETG • TPU)" : "Materials (PLA • PETG • TPU)"}</span>
+          </Link>
+
+          <Link
+            href="/orders"
+            onClick={() => setMobileMenuOpen(false)}
+            className="flex items-center gap-3 px-3 py-2 rounded-xl text-sm font-semibold text-slate-700 hover:bg-slate-50"
+          >
+            <ClipboardList className="w-4 h-4 text-[#0066cc]" />
+            <span>{t.nav.trackOrder}</span>
+          </Link>
+
+          <div className="pt-3 border-t border-slate-100 flex items-center justify-between">
+            <button
+              onClick={() => setLanguage(language === "en" ? "ar" : "en")}
+              className="p-2 text-xs font-bold rounded-lg border border-slate-200 text-slate-700"
+            >
+              {language === "en" ? "تغيير للعربية 🇪🇬" : "Switch to English 🇺🇸"}
+            </button>
+
+            {!user && (
+              <Link
+                href="/login"
+                onClick={() => setMobileMenuOpen(false)}
+                className="px-4 py-2 rounded-lg text-xs font-bold bg-[#0066cc] text-white"
+              >
+                {isRtl ? "تسجيل الدخول" : "Sign In"}
+              </Link>
             )}
           </div>
         </div>

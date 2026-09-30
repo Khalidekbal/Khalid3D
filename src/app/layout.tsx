@@ -5,6 +5,7 @@ import { AuthProvider } from "@/context/AuthContext";
 import { LanguageProvider } from "@/context/LanguageContext";
 import Navbar from "@/components/layout/Navbar";
 import BrandLogo from "@/components/brand/BrandLogo";
+import ClientAssistant from "@/components/assistant/ClientAssistant";
 import Link from "next/link";
 import { Phone, Mail, MapPin, Award, CheckCircle2 } from "lucide-react";
 
@@ -116,6 +117,7 @@ export default function RootLayout({
               </div>
             </div>
           </footer>
+            <ClientAssistant />
           </AuthProvider>
         </LanguageProvider>
       </body>
