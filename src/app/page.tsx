@@ -211,14 +211,14 @@ export default function HomePage() {
             {/* Centerpiece Visual (Planetary Gearbox Assembly) */}
             <div className="lg:col-span-6 flex justify-center">
               <div className="relative w-full max-w-md aspect-square rounded-3xl bg-white border border-[#d4e3e1] p-4 shadow-sm overflow-hidden group">
-                <div className="relative w-full h-full rounded-2xl overflow-hidden bg-[#eef7f6] flex items-center justify-center p-2">
+                <div className="relative w-full h-full rounded-2xl overflow-hidden bg-[#eef7f6] flex items-center justify-center">
                   <Image
                     src="/images/models/planetary-gearbox-center.jpg"
                     alt="Khalid3D 3D Printed Planetary Gearbox Centerpiece"
                     fill
-                    className="object-contain transition-transform duration-700 group-hover:scale-105"
+                    className="object-cover transition-transform duration-700 group-hover:scale-105"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0e2628]/30 via-transparent to-transparent pointer-events-none" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0e2628]/40 via-transparent to-transparent pointer-events-none" />
                   <div className="absolute bottom-4 inset-x-4 text-center">
                     <span className="px-3.5 py-1 rounded-full bg-white/90 backdrop-blur-md text-xs font-mono font-bold text-[#0e2628] border border-[#d4e3e1] shadow-xs">
                       Khalid3D Functional FDM Planetary Assembly
@@ -289,12 +289,12 @@ export default function HomePage() {
             
             {/* Visual Grid of Production Lab Photos */}
             <div className="lg:col-span-6 grid grid-cols-2 gap-4">
-              <div className="relative aspect-4/3 rounded-2xl overflow-hidden border border-[#d4e3e1] shadow-2xs group bg-slate-100">
+              <div className="relative aspect-4/5 rounded-2xl overflow-hidden border border-[#d4e3e1] shadow-2xs group">
                 <Image
                   src="/images/models/fdm-printer-workshop.jpg"
                   alt="Khalid3D Calibrated FDM Printer Farm"
                   fill
-                  className="object-cover object-center transition-transform duration-700 group-hover:scale-105"
+                  className="object-cover transition-transform duration-700 group-hover:scale-105"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#0e2628]/60 via-transparent to-transparent pointer-events-none" />
                 <div className="absolute bottom-3 left-3 right-3 text-white text-[11px] font-mono font-medium">
@@ -302,12 +302,12 @@ export default function HomePage() {
                 </div>
               </div>
 
-              <div className="relative aspect-4/3 rounded-2xl overflow-hidden border border-[#d4e3e1] shadow-2xs group bg-slate-100 mt-4 sm:mt-6">
+              <div className="relative aspect-4/5 rounded-2xl overflow-hidden border border-[#d4e3e1] shadow-2xs group mt-6">
                 <Image
                   src="/images/models/package-3d-parts.jpg"
                   alt="Khalid3D Carefully Packaged 3D Printed Parts"
                   fill
-                  className="object-cover object-center transition-transform duration-700 group-hover:scale-105"
+                  className="object-cover transition-transform duration-700 group-hover:scale-105"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#0e2628]/60 via-transparent to-transparent pointer-events-none" />
                 <div className="absolute bottom-3 left-3 right-3 text-white text-[11px] font-mono font-medium">
