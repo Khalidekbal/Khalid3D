@@ -109,7 +109,7 @@ export default function JLC3DPHeroCarousel() {
       type: "image",
       mediaSrc: "/images/banners/banner-1.png",
       tagline: { en: "Virgin Engineering Polymers", ar: "خامات بوليمر نقية معتمدة" },
-      bgColor: "from-[#eef3f9] via-[#f4f7fb] to-[#ffffff]",
+      bgColor: "from-[#0e1726] via-[#0e1726] to-[#0e1726]",
     },
   ];
 
@@ -178,7 +178,7 @@ export default function JLC3DPHeroCarousel() {
         }}
       >
         {slides.map((slide, idx) => {
-          const isDark = slide.type === "video";
+          const isDark = slide.type === "video" || slide.id === "materials";
 
           return (
             <div
@@ -233,29 +233,16 @@ export default function JLC3DPHeroCarousel() {
                   </div>
                 </div>
               ) : (
-                /* Full-Height Widescreen Banner Image (Taking Screen Right & Center) */
-                <div
-                  className={`absolute inset-y-0 ${
-                    isRtl ? "left-0 w-full lg:w-[65%]" : "right-0 w-full lg:w-[65%]"
-                  } h-full z-0 flex items-center justify-end pointer-events-none`}
-                >
-                  <div className="relative w-full h-full">
-                    <Image
-                      src={slide.mediaSrc}
-                      alt={slide.titlePrefix.en + slide.titleHighlight.en}
-                      fill
-                      priority={idx === 0}
-                      className="object-contain lg:object-cover object-right"
-                    />
-                    {/* Seamless Blend Gradient to Left Edge */}
-                    <div
-                      className={`absolute inset-0 ${
-                        isRtl
-                          ? "bg-gradient-to-r from-transparent via-[#edf5fd]/40 to-[#edf5fd] lg:to-transparent"
-                          : "bg-gradient-to-l from-transparent via-[#edf5fd]/40 to-[#edf5fd] lg:to-transparent"
-                      }`}
-                    />
-                  </div>
+                /* Full-Height Widescreen Banner Image (Filling 100% of the Screen) */
+                <div className="absolute inset-0 w-full h-full z-0 pointer-events-none">
+                  <Image
+                    src={slide.mediaSrc}
+                    alt={slide.titlePrefix.en + slide.titleHighlight.en}
+                    fill
+                    priority={idx === 0}
+                    className="w-full h-full object-cover object-center"
+                    sizes="100vw"
+                  />
                 </div>
               )}
 
