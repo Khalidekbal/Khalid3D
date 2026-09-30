@@ -116,32 +116,26 @@ export default function HomePage() {
     {
       q: isRtl ? "ما هي صيغ ملفات 3D CAD التي تقبلونها؟" : "What 3D CAD file formats do you accept?",
       a: isRtl
-        ? "نقبل صيغ STL و STEP و OBJ و 3MF. يُفضل استخدام ملفات STEP للأجزاء الهندسية الميكانيكية للحصول على أفضل دقة أبعاد ممكنة."
-        : "We accept STL, STEP, OBJ, and 3MF files. We strongly recommend STEP format for mechanical components to ensure the highest dimensional fidelity.",
+        ? "نقبل صيغ STL و STEP و OBJ و 3MF. يُفضل استخدام ملفات STEP للحصول على أعلى دقة ميكانيكية."
+        : "We accept STL, STEP, OBJ, and 3MF files. STEP format is recommended for optimal mechanical precision.",
     },
     {
       q: isRtl ? "كيف يتم حساب تكلفة الطلب بالجنيه المصري؟" : "How is pricing calculated in Egyptian Pounds (EGP)?",
       a: isRtl
-        ? "تعتمد تسعيرتنا على معادلة هندسية شفافة 100%: (وزن الجزء بالجرام × سعر الخامة) + (زمن الطباعة بالدقائق × سعر تشغيل الماكينة) + رسوم تجهيز الماكينة. بدون أي تكاليف خفية."
-        : "Our pricing uses a 100% transparent formula: (Part weight in grams × material rate) + (Machine run-time in minutes × minute rate) + calibrated machine setup fee. No hidden markups.",
+        ? "تسعير فوري ومباشر بناءً على وزن الجزء بالجرام ودقائق تشغيل الماكينة بدون أي رسوم خفية."
+        : "Direct formula pricing computed from filament grams and machine run-time minutes with zero hidden markups.",
     },
     {
       q: isRtl ? "ما هي دقة الأبعاد المضمونة للأجزاء المطبوعة؟" : "What is the guaranteed dimensional tolerance?",
       a: isRtl
-        ? "نضمن دقة أبعاد ±0.15 مم لخامتي PLA و PETG على الطابعات الصناعية المعايرة، وهي مثالية للتروس والتجاويف وتجميع القطع الميكانيكية."
-        : "We guarantee a dimensional tolerance of ±0.15 mm on calibrated FDM platforms for PLA and PETG, ideal for precision gear trains, press-fits, and mechanical housings.",
+        ? "نضمن دقة أبعاد ±0.15 مم لخامتي PLA و PETG، وهي مثالية للتروس والتجاويف والتجميع الميكانيكي."
+        : "We guarantee ±0.15mm tolerance for PLA and PETG, calibrated for bearings, gears, and press-fits.",
     },
     {
       q: isRtl ? "كم يستغرق تجهيز الطلب والشحن في مصر؟" : "What is the turnaround and delivery time across Egypt?",
       a: isRtl
-        ? "تُشحن النماذج الأولية خلال 24 إلى 48 ساعة داخل القاهرة والجيزة، وخلال 48 إلى 72 ساعة لجميع محافظات مصر مع تغليف محكم ضد الرطوبة."
-        : "Prototypes ship within 24 to 48 hours within Cairo & Giza, and 48 to 72 hours across all Egyptian governorates, vacuum-sealed with desiccant protection.",
-    },
-    {
-      q: isRtl ? "هل يمكنني طلب نسبة ملء مخصصة (Infill) أو جدران سميكة؟" : "Can I customize the infill percentage and shell wall thickness?",
-      a: isRtl
-        ? "نعم بالكامل! يمكنك تحديد نسبة الملء (من 15% للنماذج الشكلية حتى 100% للأجزاء الميكانيكية المعرضة للإجهاد) وتحديد عدد الطبقات الخارجية أثناء طلب عرض السعر."
-        : "Yes, completely! You can dial in the exact infill density (from 15% for visual mockups to 100% solid for structural load-bearing parts) and shell walls in the quote tool.",
+        ? "خلال 24-48 ساعة داخل القاهرة والجيزة، و48-72 ساعة لجميع محافظات مصر بتغليف عازل للرطوبة."
+        : "24-48 hours within Cairo & Giza, and 48-72 hours across all Egyptian governorates, vacuum-sealed with desiccant.",
     },
   ];
 
@@ -159,60 +153,56 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
           {/* Section Header */}
-          <div className="text-center max-w-2xl mx-auto mb-16 space-y-3">
+          <div className="text-center max-w-xl mx-auto mb-12 space-y-2">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#eef7f6] border border-[#d4e3e1] text-xs font-mono font-semibold text-[#007065]">
               <Sparkles className="w-3.5 h-3.5 text-[#009e8f]" />
-              <span>{isRtl ? "الهندسة من الداخل إلى الخارج" : "ENGINEERED FROM THE CORE OUT"}</span>
+              <span>{isRtl ? "الهندسة الصناعية" : "PRECISION STANDARDS"}</span>
             </div>
             <h2 className="text-3xl sm:text-4xl font-black text-[#0e2628] tracking-tight">
-              {isRtl ? "مواصفات تضمن نجاح تجميع أجزائك" : "Precision Architecture in Every Part"}
+              {isRtl ? "مواصفات تضمن دقة تجميع أجزائك" : "Mechanical Tolerance & Surface Finish"}
             </h2>
-            <p className="text-sm sm:text-base text-[#53696b]">
+            <p className="text-xs sm:text-sm text-[#53696b]">
               {isRtl
-                ? "نظام تصنيع FDM مصمم خصيصاً للمهندسين والمصممين الذين يحتاجون إلى أجزاء وظيفية متوافقة مع متطلبات التجميع الحقيقية."
-                : "A purposeful additive workflow designed for engineers, makers, and product designers who require true functional fidelity."}
+                ? "معايرة ميكانيكية دقيقة لضمان تركيب الرولمانات والتروس مباشرة."
+                : "Calibrated axis compensation engineered for real functional assemblies."}
             </p>
           </div>
 
-          {/* Central 3D Centerpiece with 4 Floating Callouts */}
+          {/* Central 3D Centerpiece with 4 Minimal Stat Cards */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             
             {/* Left 2 Callouts */}
-            <div className="lg:col-span-3 space-y-6">
+            <div className="lg:col-span-3 space-y-4">
               
               {/* Callout 01 */}
-              <div className="p-5 rounded-2xl bg-white border border-[#d4e3e1] shadow-2xs hover:border-[#009e8f] transition-all text-left">
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-[11px] font-mono font-bold text-[#007065] px-2 py-0.5 rounded bg-[#d8faf5]">
+              <div className="p-4 rounded-2xl bg-white border border-[#d4e3e1] shadow-2xs hover:border-[#009e8f] transition-all text-left">
+                <div className="flex items-center justify-between mb-1.5">
+                  <span className="text-[10px] font-mono font-bold text-[#007065] px-2 py-0.5 rounded bg-[#d8faf5]">
                     01 • SURFACE
                   </span>
                   <Layers className="w-4 h-4 text-[#009e8f]" />
                 </div>
-                <h3 className="text-base font-bold text-[#0e2628] mb-1">
-                  {isRtl ? "رص طبقات فائق النعومة" : "Dynamic Layer Stacking"}
+                <h3 className="text-sm font-bold text-[#0e2628]">
+                  {isRtl ? "طبقات ناعمة 0.12 مم" : "0.12mm Micro Layers"}
                 </h3>
-                <p className="text-xs text-[#53696b] leading-relaxed">
-                  {isRtl
-                    ? "ارتفاع طبقات يبدأ من 0.12 مم يضمن اختفاء خطوط الترسيب تقريباً وتفاصيل واضحة للخطوط والنقوش."
-                    : "Layer heights down to 0.12mm eliminate harsh contour stepping, delivering crisp threads and smooth surfaces."}
+                <p className="text-[11px] text-[#53696b] mt-0.5">
+                  {isRtl ? "خطوط ترسيب غير مرئية وتفاصيل حادة." : "Smooth finish with minimal layer stepping."}
                 </p>
               </div>
 
               {/* Callout 02 */}
-              <div className="p-5 rounded-2xl bg-white border border-[#d4e3e1] shadow-2xs hover:border-[#009e8f] transition-all text-left">
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-[11px] font-mono font-bold text-[#007065] px-2 py-0.5 rounded bg-[#d8faf5]">
+              <div className="p-4 rounded-2xl bg-white border border-[#d4e3e1] shadow-2xs hover:border-[#009e8f] transition-all text-left">
+                <div className="flex items-center justify-between mb-1.5">
+                  <span className="text-[10px] font-mono font-bold text-[#007065] px-2 py-0.5 rounded bg-[#d8faf5]">
                     02 • TOLERANCE
                   </span>
                   <Gauge className="w-4 h-4 text-[#009e8f]" />
                 </div>
-                <h3 className="text-base font-bold text-[#0e2628] mb-1">
-                  {isRtl ? "تفاوت أبعاد ±0.15 مم" : "Mechanical Tolerance Fit"}
+                <h3 className="text-sm font-bold text-[#0e2628]">
+                  {isRtl ? "تفاوت أبعاد ±0.15 مم" : "±0.15mm Tolerance"}
                 </h3>
-                <p className="text-xs text-[#53696b] leading-relaxed">
-                  {isRtl
-                    ? "معايرة دقيقة لمحاور الحركة وحجم البثق تضمن تركيب رولمانات البلي والمسامير بدون الحاجة لتعديل يدوي."
-                    : "Calibrated axis compensation ensures precision press-fits for standard 608 bearings, M3/M4 heat-inserts, and gears."}
+                <p className="text-[11px] text-[#53696b] mt-0.5">
+                  {isRtl ? "توافق محكم للتروس ورولمانات البلي 608." : "Precision fit for standard 608 bearings & gears."}
                 </p>
               </div>
 
@@ -228,14 +218,10 @@ export default function HomePage() {
                     fill
                     className="object-cover transition-transform duration-700 group-hover:scale-105"
                   />
-
-                  {/* Ambient overlay */}
                   <div className="absolute inset-0 bg-gradient-to-t from-[#0e2628]/40 via-transparent to-transparent pointer-events-none" />
-
-                  {/* Bottom caption */}
                   <div className="absolute bottom-4 inset-x-4 text-center">
                     <span className="px-3.5 py-1 rounded-full bg-white/90 backdrop-blur-md text-xs font-mono font-bold text-[#0e2628] border border-[#d4e3e1] shadow-xs">
-                      Khalid3D Core Assembly • Functional FDM Gearbox
+                      Khalid3D Functional FDM Planetary Assembly
                     </span>
                   </div>
                 </div>
@@ -243,41 +229,37 @@ export default function HomePage() {
             </div>
 
             {/* Right 2 Callouts */}
-            <div className="lg:col-span-3 space-y-6">
+            <div className="lg:col-span-3 space-y-4">
               
               {/* Callout 03 */}
-              <div className="p-5 rounded-2xl bg-white border border-[#d4e3e1] shadow-2xs hover:border-[#009e8f] transition-all text-left">
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-[11px] font-mono font-bold text-[#007065] px-2 py-0.5 rounded bg-[#d8faf5]">
+              <div className="p-4 rounded-2xl bg-white border border-[#d4e3e1] shadow-2xs hover:border-[#009e8f] transition-all text-left">
+                <div className="flex items-center justify-between mb-1.5">
+                  <span className="text-[10px] font-mono font-bold text-[#007065] px-2 py-0.5 rounded bg-[#d8faf5]">
                     03 • POLYMERS
                   </span>
                   <Cpu className="w-4 h-4 text-[#009e8f]" />
                 </div>
-                <h3 className="text-base font-bold text-[#0e2628] mb-1">
-                  {isRtl ? "بوليمرات هندسية معتمدة" : "Certified Engineering Polymers"}
+                <h3 className="text-sm font-bold text-[#0e2628]">
+                  {isRtl ? "خامات صناعية نقية" : "Virgin Certified Filaments"}
                 </h3>
-                <p className="text-xs text-[#53696b] leading-relaxed">
-                  {isRtl
-                    ? "تخزين الخامات داخل صناديق تجفيف مخصصة لمنع الرطوبة وضمان قوة الالتصاق بين الطبقات بنسبة 100%."
-                    : "Continuous desiccated drybox storage prevents polymer hydrolysis, guaranteeing pristine inter-layer adhesion."}
+                <p className="text-[11px] text-[#53696b] mt-0.5">
+                  {isRtl ? "خامات مجففة تضمن التصاق طبقات 100%." : "Pre-dried filaments for 100% layer adhesion."}
                 </p>
               </div>
 
               {/* Callout 04 */}
-              <div className="p-5 rounded-2xl bg-white border border-[#d4e3e1] shadow-2xs hover:border-[#009e8f] transition-all text-left">
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-[11px] font-mono font-bold text-[#007065] px-2 py-0.5 rounded bg-[#d8faf5]">
-                    04 • TRANSPARENCY
+              <div className="p-4 rounded-2xl bg-white border border-[#d4e3e1] shadow-2xs hover:border-[#009e8f] transition-all text-left">
+                <div className="flex items-center justify-between mb-1.5">
+                  <span className="text-[10px] font-mono font-bold text-[#007065] px-2 py-0.5 rounded bg-[#d8faf5]">
+                    04 • FORMULA
                   </span>
                   <Calculator className="w-4 h-4 text-[#009e8f]" />
                 </div>
-                <h3 className="text-base font-bold text-[#0e2628] mb-1">
-                  {isRtl ? "تسعير رياضي بالجرام والدقيقة" : "Direct Gram & Minute Formula"}
+                <h3 className="text-sm font-bold text-[#0e2628]">
+                  {isRtl ? "تسعير بالجرام والدقيقة" : "Weight & Time Pricing"}
                 </h3>
-                <p className="text-xs text-[#53696b] leading-relaxed">
-                  {isRtl
-                    ? "السعر يعكس استهلاك المادة الخام وساعات تشغيل الطابعة بدقة متناهية بالجنيه المصري، دون تقديرات جزافية."
-                    : "Zero guesswork. Slicer data determines the exact grams and nozzle run-time for real-time fair cost estimation."}
+                <p className="text-[11px] text-[#53696b] mt-0.5">
+                  {isRtl ? "حساب فوري مباشر بدون أي رسوم خفية." : "Direct formula in EGP with zero guesswork."}
                 </p>
               </div>
 
@@ -351,67 +333,59 @@ export default function HomePage() {
                   : "Every order undergoes our standardized 4-stage engineering pipeline to guarantee zero thermal warping, crisp layer adhesion, and exact fit."}
               </p>
 
-              <div className="space-y-4 pt-2">
-                <div className="flex gap-4">
-                  <div className="w-8 h-8 rounded-full bg-[#00dbc6] text-[#0e2628] font-mono font-bold text-xs flex items-center justify-center shrink-0">
+              <div className="space-y-3 pt-1">
+                <div className="flex items-center gap-3.5 p-3 rounded-xl bg-white border border-[#d4e3e1]">
+                  <div className="w-7 h-7 rounded-full bg-[#00dbc6] text-[#0e2628] font-mono font-bold text-xs flex items-center justify-center shrink-0">
                     1
                   </div>
                   <div>
-                    <h4 className="text-sm font-bold text-[#0e2628]">
-                      {isRtl ? "رفع الملف وتحليله تلقائياً" : "Client-Side Slicing Analysis"}
+                    <h4 className="text-xs font-bold text-[#0e2628]">
+                      {isRtl ? "رفع وتحليل الملف تلقائياً" : "Instant CAD Mesh Analysis"}
                     </h4>
-                    <p className="text-xs text-[#53696b] mt-0.5">
-                      {isRtl
-                        ? "يقوم المتصفح بحساب الحجم والمساحة وتقدير الوزن والدقائق فوراً دون تأخير."
-                        : "Instant geometric mesh breakdown and volume computation directly in your browser."}
+                    <p className="text-[11px] text-[#53696b]">
+                      {isRtl ? "حساب الحجم والوزن والدقائق فوراً في المتصفح." : "Browser-side volume, weight & time calculation."}
                     </p>
                   </div>
                 </div>
 
-                <div className="flex gap-4">
-                  <div className="w-8 h-8 rounded-full bg-[#d8faf5] text-[#007065] font-mono font-bold text-xs flex items-center justify-center shrink-0 border border-[#a8ede4]">
+                <div className="flex items-center gap-3.5 p-3 rounded-xl bg-white border border-[#d4e3e1]">
+                  <div className="w-7 h-7 rounded-full bg-[#d8faf5] text-[#007065] font-mono font-bold text-xs flex items-center justify-center shrink-0 border border-[#a8ede4]">
                     2
                   </div>
                   <div>
-                    <h4 className="text-sm font-bold text-[#0e2628]">
-                      {isRtl ? "تجهيز ملف الـ G-Code ومعايرة الطابعة" : "Toolpath Generation & Bed Leveling"}
+                    <h4 className="text-xs font-bold text-[#0e2628]">
+                      {isRtl ? "تجهيز مسارات الحركة (G-Code)" : "Optimal Toolpath Slicing"}
                     </h4>
-                    <p className="text-xs text-[#53696b] mt-0.5">
-                      {isRtl
-                        ? "تحديد اتجاه الطباعة الأمثل لأقصى متانة ميكانيكية وضبط درجة حرارة الفوهة بدقة."
-                        : "Optimal print orientation selection for maximum tensile strength along critical stress vectors."}
+                    <p className="text-[11px] text-[#53696b]">
+                      {isRtl ? "توجيه الطباعة لأقصى صلابة ميكانيكية." : "Print orientation selected for load-bearing strength."}
                     </p>
                   </div>
                 </div>
 
-                <div className="flex gap-4">
-                  <div className="w-8 h-8 rounded-full bg-[#d8faf5] text-[#007065] font-mono font-bold text-xs flex items-center justify-center shrink-0 border border-[#a8ede4]">
+                <div className="flex items-center gap-3.5 p-3 rounded-xl bg-white border border-[#d4e3e1]">
+                  <div className="w-7 h-7 rounded-full bg-[#d8faf5] text-[#007065] font-mono font-bold text-xs flex items-center justify-center shrink-0 border border-[#a8ede4]">
                     3
                   </div>
                   <div>
-                    <h4 className="text-sm font-bold text-[#0e2628]">
-                      {isRtl ? "الطباعة الصناعية والمراقبة الحرارية" : "Precision FDM Execution"}
+                    <h4 className="text-xs font-bold text-[#0e2628]">
+                      {isRtl ? "الطباعة والتحكم الحراري" : "Precision FDM Execution"}
                     </h4>
-                    <p className="text-xs text-[#53696b] mt-0.5">
-                      {isRtl
-                        ? "طباعة تحت تحكم حراري كامل لمنع الانكماش أو انفصال الطبقات مع خيوط مجففة."
-                        : "Continuous thermal chamber management preventing warping on large engineering enclosures."}
+                    <p className="text-[11px] text-[#53696b]">
+                      {isRtl ? "غرفة تشغيل معزولة تمنع أي انكماش أو تشوه." : "Heated chamber control preventing thermal warping."}
                     </p>
                   </div>
                 </div>
 
-                <div className="flex gap-4">
-                  <div className="w-8 h-8 rounded-full bg-[#d8faf5] text-[#007065] font-mono font-bold text-xs flex items-center justify-center shrink-0 border border-[#a8ede4]">
+                <div className="flex items-center gap-3.5 p-3 rounded-xl bg-white border border-[#d4e3e1]">
+                  <div className="w-7 h-7 rounded-full bg-[#d8faf5] text-[#007065] font-mono font-bold text-xs flex items-center justify-center shrink-0 border border-[#a8ede4]">
                     4
                   </div>
                   <div>
-                    <h4 className="text-sm font-bold text-[#0e2628]">
-                      {isRtl ? "الفحص بالميكروميتر والتغليف الآمن" : "Quality Inspection & Courier Dispatch"}
+                    <h4 className="text-xs font-bold text-[#0e2628]">
+                      {isRtl ? "الفحص والتغليف الآمن" : "Caliper Check & Dispatch"}
                     </h4>
-                    <p className="text-xs text-[#53696b] mt-0.5">
-                      {isRtl
-                        ? "فحص الأبعاد الحرجة بواسطة مهندسينا ثم تغليف كل جزء بأكياس عازلة للرطوبة."
-                        : "Caliper verification of critical bearing seats before vacuum-packaging with desiccant."}
+                    <p className="text-[11px] text-[#53696b]">
+                      {isRtl ? "فحص الأبعاد وتغليف عازل مع شحن سريع." : "Dimensional verification with vacuum desiccant pack."}
                     </p>
                   </div>
                 </div>
