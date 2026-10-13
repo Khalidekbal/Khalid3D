@@ -47,18 +47,28 @@ export async function POST(req: Request) {
     const body = await req.json();
     const {
       customerId: customCustomerId,
-      customerEmail = "customer@demo.com",
-      customerName = "Alex Chen",
+      customerEmail,
+      customerName = "Valued Customer",
+      customerPhone,
+      phone,
+      projectName,
       items,
-      subtotal,
-      shippingFee,
-      tax,
+      subtotal = 0,
+      shippingFee = 0,
+      tax = 0,
       discount = 0,
-      totalAmount,
+      totalAmount = 0,
       customerNotes,
-      isEngineeringReview = false,
+      isEngineeringReview = true,
       shippingAddress,
     } = body;
+
+    const finalPhone = customerPhone || phone || null;
+    const resolvedEmail =
+      customerEmail ||
+      (finalPhone
+        ? `${finalPhone.replace(/[^0-9]/g, "")}@khalid3d.com`
+        : `review_${Date.now()}@khalid3d.com`);
 
     if (!items || !Array.isArray(items) || items.length === 0) {
       return NextResponse.json({ error: "At least one item is required" }, { status: 400 });
@@ -67,14 +77,23 @@ export async function POST(req: Request) {
     // Find or create customer
     let user = customCustomerId
       ? await prisma.user.findUnique({ where: { id: customCustomerId } })
-      : await prisma.user.findUnique({ where: { email: customerEmail } });
+      : await prisma.user.findUnique({ where: { email: resolvedEmail } });
 
     if (!user) {
       user = await prisma.user.create({
         data: {
-          email: customerEmail,
+          email: resolvedEmail,
           name: customerName,
+          phone: finalPhone,
           role: "CUSTOMER",
+        },
+      });
+    } else if (finalPhone || customerName) {
+      user = await prisma.user.update({
+        where: { id: user.id },
+        data: {
+          ...(customerName ? { name: customerName } : {}),
+          ...(finalPhone ? { phone: finalPhone } : {}),
         },
       });
     }
@@ -110,7 +129,9 @@ export async function POST(req: Request) {
         tax: parseFloat(String(tax || 0)),
         discount: parseFloat(String(discount || 0)),
         totalAmount: parseFloat(String(totalAmount || 0)),
-        customerNotes,
+        customerNotes: projectName
+          ? `[Project: ${projectName}] ${customerNotes || ""}`.trim()
+          : (customerNotes || null),
         shippingAddressId: addressId,
         items: {
           create: items.map((item: {
