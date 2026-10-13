@@ -118,6 +118,24 @@ export async function POST(req: Request) {
     const randomSuffix = Math.floor(1000 + Math.random() * 9000);
     const orderNumber = `JLC-${new Date().getFullYear()}-${randomSuffix}`;
 
+    // Pre-fetch default technology and materials for safe fallback mapping
+    const dbTechs = await prisma.printerTechnology.findMany({ include: { materials: true } });
+    const defaultTech = dbTechs[0];
+    const defaultMat = defaultTech?.materials[0];
+
+    const resolveTechId = (techId?: string) => {
+      const match = dbTechs.find((t) => t.id === techId);
+      return match ? match.id : defaultTech?.id;
+    };
+
+    const resolveMatId = (matId?: string) => {
+      for (const t of dbTechs) {
+        const match = t.materials.find((m) => m.id === matId);
+        if (match) return match.id;
+      }
+      return defaultMat?.id;
+    };
+
     const order = await prisma.order.create({
       data: {
         orderNumber,
@@ -144,33 +162,33 @@ export async function POST(req: Request) {
             volumeCm3: number;
             surfaceAreaCm2: number;
             unitUsed?: string;
-            technologyId: string;
-            materialId: string;
+            technologyId?: string;
+            materialId?: string;
             infillPercent?: number;
             layerHeightMm?: number;
             finishingOptionId?: string;
             quantity: number;
-            unitPrice: number;
-            totalPrice: number;
+            unitPrice?: number;
+            totalPrice?: number;
             dfmWarnings?: unknown;
           }) => ({
             fileName: item.fileName,
             fileUrl: item.fileUrl || `/models/${item.fileName.toLowerCase().endsWith(".stl") ? "calibration_cube_20mm.stl" : "sensor_enclosure_lid.stl"}`,
             fileFormat: item.fileFormat || (item.fileName.endsWith(".3mf") ? "3MF" : "STL"),
-            dimX: item.dimX,
-            dimY: item.dimY,
-            dimZ: item.dimZ,
-            volumeCm3: item.volumeCm3,
-            surfaceAreaCm2: item.surfaceAreaCm2,
+            dimX: item.dimX || 20,
+            dimY: item.dimY || 20,
+            dimZ: item.dimZ || 20,
+            volumeCm3: item.volumeCm3 || 8,
+            surfaceAreaCm2: item.surfaceAreaCm2 || 24,
             unitUsed: item.unitUsed || "mm",
-            technologyId: item.technologyId,
-            materialId: item.materialId,
+            technologyId: resolveTechId(item.technologyId),
+            materialId: resolveMatId(item.materialId),
             infillPercent: item.infillPercent || 20,
             layerHeightMm: item.layerHeightMm || 0.2,
             finishingOptionId: item.finishingOptionId || null,
-            quantity: item.quantity,
-            unitPrice: item.unitPrice,
-            totalPrice: item.totalPrice,
+            quantity: item.quantity || 1,
+            unitPrice: item.unitPrice || 0,
+            totalPrice: item.totalPrice || 0,
             reviewStatus: isEngineeringReview ? "REQUIRES_MODIFICATION" : "APPROVED",
             dfmWarnings: JSON.stringify(item.dfmWarnings || []),
           })),

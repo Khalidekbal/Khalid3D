@@ -387,13 +387,21 @@ export default function Navbar() {
               )}
             </div>
           ) : (
-            <Link
-              href="/login"
-              className="px-4 py-2 rounded-full text-xs font-bold text-white bg-[#0066cc] hover:bg-[#0052a3] shadow-xs transition-all hover:scale-102 flex items-center gap-1.5"
-            >
-              <LogIn className="w-3.5 h-3.5" />
-              <span>{isRtl ? "تسجيل الدخول" : "Sign In"}</span>
-            </Link>
+            <div className="flex items-center gap-2">
+              <Link
+                href="/login"
+                className="px-4 py-2 rounded-full text-xs font-bold text-white bg-[#0066cc] hover:bg-[#0052a3] shadow-xs transition-all hover:scale-102 flex items-center gap-1.5"
+              >
+                <LogIn className="w-3.5 h-3.5" />
+                <span>{isRtl ? "تسجيل الدخول" : "Sign In"}</span>
+              </Link>
+              <Link
+                href="/register"
+                className="hidden sm:inline-flex px-3.5 py-2 rounded-full text-xs font-bold text-[#0066cc] bg-blue-50 hover:bg-blue-100 border border-blue-200 transition-all hover:scale-102"
+              >
+                <span>{isRtl ? "حساب جديد" : "Sign Up"}</span>
+              </Link>
+            </div>
           )}
 
           {/* Mobile menu toggle */}
@@ -453,13 +461,22 @@ export default function Navbar() {
             </button>
 
             {!user && (
-              <Link
-                href="/login"
-                onClick={() => setMobileMenuOpen(false)}
-                className="px-4 py-2 rounded-lg text-xs font-bold bg-[#0066cc] text-white"
-              >
-                {isRtl ? "تسجيل الدخول" : "Sign In"}
-              </Link>
+              <div className="flex items-center gap-2">
+                <Link
+                  href="/login"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="px-3.5 py-2 rounded-lg text-xs font-bold bg-[#0066cc] text-white"
+                >
+                  {isRtl ? "تسجيل الدخول" : "Sign In"}
+                </Link>
+                <Link
+                  href="/register"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="px-3.5 py-2 rounded-lg text-xs font-bold bg-blue-50 text-[#0066cc] border border-blue-200"
+                >
+                  {isRtl ? "حساب جديد" : "Sign Up"}
+                </Link>
+              </div>
             )}
           </div>
         </div>

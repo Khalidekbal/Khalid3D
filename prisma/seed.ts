@@ -54,6 +54,16 @@ async function main() {
     },
   });
 
+  const khalilStaff = await prisma.user.create({
+    data: {
+      email: "khalidekbal03@gmail.com",
+      passwordHash: hashPassword("102030"),
+      name: "Khalid Ekbal",
+      role: "STAFF",
+      phone: "+20 101 234 5678",
+    },
+  });
+
   const admin = await prisma.user.create({
     data: {
       email: "admin@khalid3d.com",
@@ -64,7 +74,7 @@ async function main() {
     },
   });
 
-  console.log("✓ Seeded Users: Ahmed Hassan (Customer), Khalid Ekbal (Staff: staff@khalid3d.com), Admin");
+  console.log("✓ Seeded Users: Ahmed Hassan (Customer), Khalid Ekbal (Staff: khalidekbal03@gmail.com), Admin");
 
   // 2. Printer Technology: FDM Only
   const fdm = await prisma.printerTechnology.create({

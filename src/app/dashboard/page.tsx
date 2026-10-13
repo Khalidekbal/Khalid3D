@@ -275,10 +275,10 @@ export default function StaffDashboardPage() {
         </div>
         <div className="pt-2 flex justify-center">
           <Link
-            href="/login"
-            className="px-6 py-3 rounded-2xl text-xs font-bold bg-amber-600 hover:bg-amber-700 text-white transition-all shadow-md shadow-amber-500/20"
+            href="/staff/login"
+            className="px-6 py-3 rounded-2xl text-xs font-bold bg-[#00dbc6] hover:bg-[#00c5b2] text-slate-950 transition-all shadow-md shadow-[#00dbc6]/20"
           >
-            Staff Sign In (Email & Password)
+            Staff Sign In (Authorized Personnel)
           </Link>
         </div>
       </div>
